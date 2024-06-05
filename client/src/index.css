@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.boxshadow{
+  box-shadow: #0003 0 4px 6px -1px, #0000001f 0 2px 4px -1px;;
+}
+.customInput {
+  @apply w-full rounded-[4px] h-[40px] border-[2px] focus-visible:outline-none bg-bg border-[#2f4553] hover:border-[#557086] focus-visible:border-[#557086]  shadow-custom   text-[#eee];
+}
+body, html{
+  overflow: hidden;
+  font-family: 'Open Sans',sans-serif;
+  color: #eee;
+}
+.ds{
+  font-family: "Dancing Script";
+}
+
+
+*{
+  scrollbar-color: #2f4553 transparent;
+}
