@@ -3,11 +3,14 @@ import Nav from "../component/Nav";
 import { BrowseWithTopNav } from "../component/Browse";
 import HomeMainContent from "../component/HomeMainContent";
 import Register from "../component/Register";
+import Signin from "../component/Signin";
 
 
 export default function Home() {
-  const [isRegister, setIsRegister] = useState(true);
+  const [isRegister, setIsRegister] = useState(false);
+  const [isSignIn, setIsSignIn] = useState(false);
   const [isLoading , setisLoading] = useState(false)
+  
   return (
     <>
     {isLoading && (
@@ -18,11 +21,14 @@ export default function Home() {
       {isRegister && (
        <Register setIsRegister={setIsRegister} setisLoading={setisLoading}/>
       )}
+      {isSignIn && (
+       <Signin setIsSignIn={setIsSignIn} setisLoading={setisLoading}/>
+      )}
       <div className=" h-[100svh] w-screen overflow-hidden flex flex-row caret-transparent ">
         <BrowseWithTopNav />
         <div className="flex-1 flex flex-col ">
-          <Nav />
-          <HomeMainContent />
+          <Nav setIsSignIn={setIsSignIn} setIsRegister={setIsRegister}/>
+          <HomeMainContent setIsSignIn={setIsSignIn} setIsRegister={setIsRegister} />
         </div>
       </div>
     </>
