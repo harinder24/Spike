@@ -1,5 +1,6 @@
 
 
+import BrowseMobile from './screen/BrowseMobile'
 import Home from './screen/Home'
 
 function App() {
@@ -8,6 +9,7 @@ function App() {
   return (
     <>
       <Home/>
+      {/* <BrowseMobile/> */}
     </>
   )
 }

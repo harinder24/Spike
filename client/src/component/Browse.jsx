@@ -5,26 +5,33 @@ import WalletIcon from "@mui/icons-material/Wallet";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 import AutoGraphIcon from "@mui/icons-material/AutoGraph";
-
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import LogoutIcon from "@mui/icons-material/Logout";
 import StarOutlineOutlinedIcon from "@mui/icons-material/StarOutlineOutlined";
 import HistoryOutlinedIcon from "@mui/icons-material/HistoryOutlined";
 import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
-import ExpandCircleDownIcon from "@mui/icons-material/ExpandCircleDown";
+
 import MenuIcon from "@mui/icons-material/Menu";
-export default function Browse({ isWidthReduced }) {
+export default function Browse({
+  isWidthReduced,
+  setIsNotification,
+  setIsVault,
+  setIsStat,
+   setIsRecent,
+   setVip,setIsWallet,setIsLogOut
+}) {
   const [isProfileExpanded, setIsProfileExpanded] = useState(false);
   const [isProfileExpandedWidth, setIsProfileExpandedWidth] = useState(316);
   useEffect(() => {
     if (isWidthReduced) {
       setIsProfileExpanded(true);
-      setIsProfileExpandedWidth(260);
+      setIsProfileExpandedWidth(250);
     } else {
-      setIsProfileExpanded(false  );
+      setIsProfileExpanded(false);
       setIsProfileExpandedWidth(316);
     }
   }, [isWidthReduced]);
-
 
   return (
     <div
@@ -32,7 +39,7 @@ export default function Browse({ isWidthReduced }) {
     >
       <div className="bg-sbg rounded-[4px] w-full flex flex-col ">
         <div
-        style={{height: isProfileExpanded ? isProfileExpandedWidth : 52}}
+          style={{ height: isProfileExpanded ? isProfileExpandedWidth : 52 }}
           className={`transition-all duration-500 ease-in-out ${
             isWidthReduced
               ? " bg-transparent"
@@ -51,11 +58,12 @@ export default function Browse({ isWidthReduced }) {
               </div>
               <div className=" text-sm font-semibold">Profile</div>
               <div
-                className={`flex-1 flex flex-row justify-end items-center ${
-                  isProfileExpanded ? "text-button" : "text-stext"
-                } group-hover:text-[#eee]`}
+                className={`flex-1 flex flex-row justify-end items-center 
+              text-stext
+                 group-hover:text-[#eee]`}
               >
-                <ExpandCircleDownIcon sx={{ fontSize: 18 }} />
+                {isProfileExpanded ?  <KeyboardArrowDownIcon sx={{ fontSize: 18 }} />:  <KeyboardArrowLeftIcon sx={{ fontSize: 18 }} />}
+                
               </div>
             </div>
           )}
@@ -64,7 +72,7 @@ export default function Browse({ isWidthReduced }) {
               {!isWidthReduced && (
                 <div className=" border-b-[2px] border-stext"></div>
               )}
-              <div className="flex flex-row items-center p-4 gap-x-1 cursor-pointer group  rounded-[4px] hover:bg-sbgHover">
+              <div onClick={()=> setIsWallet(true)} className="flex flex-row items-center p-4 gap-x-1 cursor-pointer group  rounded-[4px] hover:bg-sbgHover">
                 <div className=" flex flex-row justify-center items-center group-hover:text-[#eee] text-stext">
                   <WalletIcon sx={{ fontSize: 18 }} />
                 </div>
@@ -72,7 +80,10 @@ export default function Browse({ isWidthReduced }) {
                   <div className=" text-sm font-semibold">Wallet</div>
                 )}
               </div>
-              <div className="flex flex-row items-center p-4 gap-x-1 cursor-pointer group  rounded-[4px] hover:bg-sbgHover">
+              <div
+                onClick={() => setIsVault(true)}
+                className="flex flex-row items-center p-4 gap-x-1 cursor-pointer group  rounded-[4px] hover:bg-sbgHover"
+              >
                 <div className=" flex flex-row justify-center items-center group-hover:text-[#eee] text-stext">
                   <AccountBalanceWalletIcon sx={{ fontSize: 18 }} />
                 </div>
@@ -80,7 +91,10 @@ export default function Browse({ isWidthReduced }) {
                   <div className=" text-sm font-semibold">Vault</div>
                 )}
               </div>
-              <div className="flex flex-row items-center p-4 gap-x-1 cursor-pointer group  rounded-[4px] hover:bg-sbgHover">
+              <div
+                onClick={() => setIsStat(true)}
+                className="flex flex-row items-center p-4 gap-x-1 cursor-pointer group  rounded-[4px] hover:bg-sbgHover"
+              >
                 <div className=" flex flex-row justify-center items-center group-hover:text-[#eee] text-stext">
                   <AutoGraphIcon sx={{ fontSize: 18 }} />
                 </div>
@@ -89,7 +103,10 @@ export default function Browse({ isWidthReduced }) {
                 )}
               </div>
 
-              <div className="flex flex-row items-center p-4 gap-x-1 cursor-pointer group  rounded-[4px] hover:bg-sbgHover">
+              <div
+                onClick={() => setIsNotification(true)}
+                className="flex flex-row items-center p-4 gap-x-1 cursor-pointer group  rounded-[4px] hover:bg-sbgHover"
+              >
                 <div className=" flex flex-row justify-center items-center group-hover:text-[#eee] text-stext">
                   <NotificationsIcon sx={{ fontSize: 18 }} />
                 </div>
@@ -100,7 +117,7 @@ export default function Browse({ isWidthReduced }) {
               {!isWidthReduced && (
                 <div className=" border-b-[2px] border-stext"></div>
               )}
-              <div className="flex flex-row items-center p-4 gap-x-1 cursor-pointer group  rounded-[4px] hover:bg-sbgHover">
+              <div onClick={()=>setIsLogOut(true)} className="flex flex-row items-center p-4 gap-x-1 cursor-pointer group  rounded-[4px] hover:bg-sbgHover">
                 <div className=" flex flex-row justify-center items-center group-hover:text-[#eee] text-stext">
                   <LogoutIcon sx={{ fontSize: 18 }} />
                 </div>
@@ -119,14 +136,7 @@ export default function Browse({ isWidthReduced }) {
             <div className=" text-sm font-semibold">Favourite</div>
           )}
         </div>
-        <div className="flex flex-row items-center p-4 gap-x-1 cursor-pointer group  rounded-[4px] hover:bg-sbgHover">
-          <div className=" flex flex-row justify-center items-center group-hover:text-[#eee] text-stext">
-            <HistoryOutlinedIcon sx={{ fontSize: 18 }} />
-          </div>
-          {!isWidthReduced && (
-            <div className=" text-sm font-semibold">History</div>
-          )}
-        </div>
+
         <div className="flex flex-row items-center p-4 gap-x-1 cursor-pointer group  rounded-[4px] hover:bg-sbgHover">
           <div className=" flex flex-row justify-center items-center group-hover:text-[#eee] text-stext">
             <ReceiptOutlinedIcon sx={{ fontSize: 18 }} />
@@ -135,12 +145,20 @@ export default function Browse({ isWidthReduced }) {
             <div className=" text-sm font-semibold">My Bets</div>
           )}
         </div>
-        <div className="flex flex-row items-center p-4 gap-x-1 cursor-pointer group  rounded-[4px] hover:bg-sbgHover">
+        <div onClick={()=> setIsRecent(true)} className="flex flex-row items-center p-4 gap-x-1 cursor-pointer group  rounded-[4px] hover:bg-sbgHover">
+          <div className=" flex flex-row justify-center items-center group-hover:text-[#eee] text-stext">
+            <HistoryOutlinedIcon sx={{ fontSize: 18 }} />
+          </div>
+          {!isWidthReduced && (
+            <div className=" text-sm font-semibold">Recent</div>
+          )}
+        </div>
+        <div onClick={()=>setVip(true)} className="flex flex-row items-center p-4 gap-x-1 cursor-pointer group  rounded-[4px] hover:bg-sbgHover">
           <div className=" flex flex-row justify-center items-center group-hover:text-[#eee] text-stext">
             <EmojiEventsIcon sx={{ fontSize: 18 }} />
           </div>
           {!isWidthReduced && (
-            <div className=" text-sm font-semibold">VIP Club</div>
+            <div className=" text-sm font-semibold">VIP</div>
           )}
         </div>
       </div>
@@ -167,7 +185,7 @@ export default function Browse({ isWidthReduced }) {
   );
 }
 
-export function BrowseWithTopNav() {
+export function BrowseWithTopNav({ setIsNotification, setIsVault, setIsStat, setIsRecent, setVip,setIsWallet ,setIsLogOut}) {
   const [isWidthReduced, setIsWidthReduced] = useState(false);
   const [isWidthReducable, setisWidthReducable] = useState(true);
   useEffect(() => {
@@ -204,7 +222,7 @@ export function BrowseWithTopNav() {
         isWidthReduced ? "w-[82px]" : "w-[240px]"
       }   h-full flex flex-col bg-bg max-[750px]:hidden`}
     >
-      <div className="min-h-[60px] w-full flex flex-row sticky top-0">
+      <div className="h-[60px] w-full flex flex-row sticky top-0">
         <div
           className={`flex-1  boxshadow flex flex-row items-center 
          pl-[8px]
@@ -220,7 +238,16 @@ export function BrowseWithTopNav() {
           </div>
         </div>
       </div>
-      <Browse isWidthReduced={isWidthReduced} />
+      <Browse
+        setIsStat={setIsStat}
+        setIsVault={setIsVault}
+        setIsNotification={setIsNotification}
+        isWidthReduced={isWidthReduced}
+         setIsRecent={setIsRecent}
+         setVip={setVip}
+         setIsWallet={setIsWallet}
+         setIsLogOut={setIsLogOut}
+      />
     </div>
   );
 }

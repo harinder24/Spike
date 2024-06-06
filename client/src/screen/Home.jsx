@@ -4,30 +4,27 @@ import { BrowseWithTopNav } from "../component/Browse";
 import HomeMainContent from "../component/HomeMainContent";
 import Register from "../component/Register";
 import Signin from "../component/Signin";
+import Popups from "../component/Popups";
 
 
 export default function Home() {
   const [isRegister, setIsRegister] = useState(false);
   const [isSignIn, setIsSignIn] = useState(false);
   const [isLoading , setisLoading] = useState(false)
-  
+  const [isNotification, setIsNotification] = useState(false)
+  const [isVault, setIsVault] = useState(false);
+  const [isStat, setIsStat] = useState(false);
+  const [isRecent, setIsRecent] = useState(false);
+  const [vip, setVip] = useState(false);
+  const [wallet,setIsWallet] = useState(false)
+  const [isLogOut, setIsLogOut] = useState(false)
   return (
     <>
-    {isLoading && (
-        <div className=" absolute top-0  h-[100svh] w-screen  flex flex-row justify-center items-center z-[52] bg-[rgb(0,0,0,0.5)]">
-          <img className="w-20" src="loading.gif" alt="" />
-        </div>
-      )}
-      {isRegister && (
-       <Register setIsRegister={setIsRegister} setisLoading={setisLoading}/>
-      )}
-      {isSignIn && (
-       <Signin setIsSignIn={setIsSignIn} setisLoading={setisLoading}/>
-      )}
+    <Popups isRegister={isRegister} setIsRegister={setIsRegister} isLoading={isLoading} isSignIn={isSignIn} setIsSignIn={setIsSignIn} setisLoading={setisLoading} isNotification={isNotification} setIsNotification={setIsNotification}   isVault={isVault} setIsVault={setIsVault} isStat={isStat} setIsStat={setIsStat} isRecent={isRecent} setIsRecent={setIsRecent} setVip={setVip} vip={vip} wallet={wallet} setIsWallet={setIsWallet} isLogOut={isLogOut} setIsLogOut={setIsLogOut}/>
       <div className=" h-[100svh] w-screen overflow-hidden flex flex-row caret-transparent ">
-        <BrowseWithTopNav />
+        <BrowseWithTopNav setIsLogOut={setIsLogOut} setIsWallet={setIsWallet} setVip={setVip}  setIsRecent={setIsRecent} setIsStat={setIsStat} setIsVault={setIsVault} setIsNotification={setIsNotification}/>
         <div className="flex-1 flex flex-col ">
-          <Nav setIsSignIn={setIsSignIn} setIsRegister={setIsRegister}/>
+          <Nav setIsLogOut={setIsLogOut} setIsVault={setIsVault} setIsStat={setIsStat} setIsWallet={setIsWallet}  setIsSignIn={setIsSignIn} setIsRegister={setIsRegister} setIsNotification={setIsNotification} />
           <HomeMainContent setIsSignIn={setIsSignIn} setIsRegister={setIsRegister} />
         </div>
       </div>
