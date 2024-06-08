@@ -1,5 +1,5 @@
 import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import BgOpacity from "./BgOpacity";
 import { YourProgress } from "../screen/Home";
@@ -12,10 +12,15 @@ import DiamondIcon from "@mui/icons-material/Diamond";
 import StarIcon from "@mui/icons-material/Star";
 export default function VIP({ setVip }) {
   const [stage, setStage] = useState(1);
-
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(true);
   const onClickHandler = () => {
     setVip(false);
   };
+  useEffect(() => {
+    if (!isUserLoggedIn) {
+      setStage(2);
+    }
+  }, [isUserLoggedIn]);
   return (
     <BgOpacity onClickHandler={onClickHandler}>
       <div className=" p-4 flex flex-col bg-sbg w-[500px] rounded-lg  max-[532px]:w-full relative  caret-transparent  gap-4 max-h-[400px]">
@@ -33,31 +38,35 @@ export default function VIP({ setVip }) {
         </div>
         <div className="overflow-y-auto flex flex-col gap-y-4">
           <div className="flex flex-row justify-center">
-            <div className="rounded-full p-1 flex flex-row gap-x-1 bg-bg">
-              <div
-                onClick={() => setStage(1)}
-                className={` ${
-                  stage === 1 ? "bg-sbg" : "bg-transparent"
-                } rounded-full h-[44px] flex flex-row items-center justify-center font-semibold text-sm w-[100px] cursor-pointer hover:bg-sbg`}
-              >
-                <div>Progress</div>
-              </div>
+            <div className={`rounded-full p-1 flex flex-row gap-x-1 ${isUserLoggedIn ? "bg-bg": ""} `}>
+              {isUserLoggedIn && (
+                <div
+                  onClick={() => setStage(1)}
+                  className={` ${
+                    stage === 1 ? "bg-sbg" : "bg-transparent"
+                  } rounded-full h-[44px] flex flex-row items-center justify-center font-semibold text-sm w-[100px] cursor-pointer hover:bg-sbg`}
+                >
+                  <div>Progress</div>
+                </div>
+              )}
               <div
                 onClick={() => setStage(2)}
                 className={` ${
                   stage === 2 ? "bg-sbg" : " bg-transparent"
-                } rounded-full h-[44px] flex flex-row items-center justify-center font-semibold text-sm w-[100px] cursor-pointer hover:bg-sbg`}
+                } rounded-full h-[44px] flex flex-row items-center justify-center font-semibold text-sm w-[100px]  hover:bg-sbg ${isUserLoggedIn ? "cursor-pointer" : " cursor-default"}`}
               >
                 <div>Benefits</div>
               </div>
-              <div
-                onClick={() => setStage(3)}
-                className={` ${
-                  stage === 3 ? "bg-sbg" : "bg-transparent"
-                } rounded-full h-[44px] flex flex-row items-center justify-center font-semibold text-sm w-[100px] cursor-pointer hover:bg-sbg`}
-              >
-                <div>Rakeback</div>
-              </div>
+              {isUserLoggedIn && (
+                <div
+                  onClick={() => setStage(3)}
+                  className={` ${
+                    stage === 3 ? "bg-sbg" : "bg-transparent"
+                  } rounded-full h-[44px] flex flex-row items-center justify-center font-semibold text-sm w-[100px] cursor-pointer hover:bg-sbg`}
+                >
+                  <div>Rakeback</div>
+                </div>
+              )}
             </div>
           </div>
           <div className="flex flex-col w-full flex-1 gap-y-4  ">

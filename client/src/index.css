@@ -2,7 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-
+.grayscale {
+  filter: opacity(0.5);
+}
 .boxshadow{
   box-shadow: #0003 0 4px 6px -1px, #0000001f 0 2px 4px -1px;;
 }

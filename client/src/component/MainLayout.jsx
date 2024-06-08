@@ -16,6 +16,7 @@ export default function MainLayout({ children }) {
   const [vip, setVip] = useState(false);
   const [wallet, setIsWallet] = useState(false);
   const [isLogOut, setIsLogOut] = useState(false);
+  const [isNotAccess, setIsNotAccess] = useState(false);
   const {pathname} = useLocation()
 
 
@@ -43,6 +44,8 @@ export default function MainLayout({ children }) {
         setIsWallet={setIsWallet}
         isLogOut={isLogOut}
         setIsLogOut={setIsLogOut}
+        isNotAccess={isNotAccess}
+        setIsNotAccess={setIsNotAccess}
       />
       <div className=" h-[100svh] w-screen overflow-hidden flex flex-row caret-transparent ">
         <BrowseWithTopNav
@@ -53,6 +56,7 @@ export default function MainLayout({ children }) {
           setIsStat={setIsStat}
           setIsVault={setIsVault}
           setIsNotification={setIsNotification}
+          setIsNotAccess={setIsNotAccess}
         />
         <div className="flex-1 flex flex-col ">
           <Nav
@@ -75,12 +79,13 @@ export default function MainLayout({ children }) {
               setIsWallet={setIsWallet}
               setIsLogOut={setIsLogOut}
               isMobile={true}
+              setIsNotAccess={setIsNotAccess}
             />
           ) : (
             children
           )}
 
-          <BottomNav />
+          <BottomNav setIsNotAccess={setIsNotAccess}/>
         </div>
       </div>
     </>

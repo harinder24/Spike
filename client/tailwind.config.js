@@ -19,6 +19,7 @@ export default {
         stext: "rgb(177,186,211)",
         // tbg: "#141d2c",
         // fbg: "#33415580",
+        ttext: "#4b5563",
         gold: "#Ffd700",
         bronze: "#CD7F32",
         silver: "#C0c0c0",

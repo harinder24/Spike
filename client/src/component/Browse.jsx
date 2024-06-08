@@ -5,8 +5,8 @@ import WalletIcon from "@mui/icons-material/Wallet";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 import AutoGraphIcon from "@mui/icons-material/AutoGraph";
-import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import LogoutIcon from "@mui/icons-material/Logout";
 import StarOutlineOutlinedIcon from "@mui/icons-material/StarOutlineOutlined";
 import HistoryOutlinedIcon from "@mui/icons-material/HistoryOutlined";
@@ -14,20 +14,25 @@ import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
 import CasinoIcon from "@mui/icons-material/Casino";
 import GamesIcon from "@mui/icons-material/Games";
 import MenuIcon from "@mui/icons-material/Menu";
-import HomeIcon from '@mui/icons-material/Home';
-import { useNavigate, useLocation } from 'react-router-dom';
+import HomeIcon from "@mui/icons-material/Home";
+import { useNavigate, useLocation } from "react-router-dom";
 export default function Browse({
   isWidthReduced,
   setIsNotification,
   setIsVault,
   setIsStat,
-   setIsRecent,
-   setVip,setIsWallet,setIsLogOut,isMobile=false
+  setIsRecent,
+  setVip,
+  setIsWallet,
+  setIsLogOut,
+  isMobile = false,
+  setIsNotAccess
 }) {
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
   const [isProfileExpanded, setIsProfileExpanded] = useState(false);
-  const {pathname} = useLocation()
+  const { pathname } = useLocation();
   const [isProfileExpandedWidth, setIsProfileExpandedWidth] = useState(316);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   useEffect(() => {
     if (isWidthReduced) {
       setIsProfileExpanded(true);
@@ -38,9 +43,12 @@ export default function Browse({
     }
   }, [isWidthReduced]);
 
+  
   return (
     <div
-      className={`${isMobile ? "bg-bg" : ""} h-full p-4 flex flex-col gap-y-4 overflow-y-auto overflow-x-hidden `}
+      className={`${
+        isMobile ? "bg-bg" : ""
+      } h-full p-4 flex flex-col gap-y-4 overflow-y-auto overflow-x-hidden `}
     >
       <div className="bg-sbg rounded-[4px] w-full flex flex-col ">
         <div
@@ -55,30 +63,37 @@ export default function Browse({
         >
           {!isWidthReduced && (
             <div
-              onClick={() => setIsProfileExpanded((prev) => !prev)}
-              className="flex flex-row items-center p-4 gap-x-1 cursor-pointer group  rounded-[4px] hover:bg-sbgHover "
+              onClick={() => isUserLoggedIn ? setIsProfileExpanded((prev) => !prev) : setIsNotAccess(true)}
+              className={`flex flex-row items-center p-4 gap-x-1 group  rounded-[4px]   ${isUserLoggedIn ? "hover:bg-sbgHover cursor-pointer " : " cursor-default text-ttext"}`}
             >
-              <div className=" flex flex-row justify-center items-center group-hover:text-[#eee] text-stext">
+              <div className={` flex flex-row justify-center items-center  ${isUserLoggedIn ? "group-hover:text-[#eee] text-stext " : " "} `}>
                 <Person2Icon sx={{ fontSize: 18 }} />
               </div>
               <div className=" text-sm font-semibold">Profile</div>
               <div
                 className={`flex-1 flex flex-row justify-end items-center 
-              text-stext
-                 group-hover:text-[#eee]`}
+              ${isUserLoggedIn ? "group-hover:text-[#eee] text-stext " : " "}`}
               >
-                {isProfileExpanded ?  <KeyboardArrowDownIcon sx={{ fontSize: 18 }} />:  <KeyboardArrowLeftIcon sx={{ fontSize: 18 }} />}
-                
+                {isProfileExpanded ? (
+                  <KeyboardArrowDownIcon sx={{ fontSize: 18 }} />
+                ) : (
+                  <KeyboardArrowLeftIcon sx={{ fontSize: 18 }} />
+                )}
               </div>
             </div>
           )}
           {isProfileExpanded && (
             <>
               {!isWidthReduced && (
-                <div className=" border-b-[2px] border-stext"></div>
+                <div className= {`border-b-[2px] ${isUserLoggedIn ? "border-stext" : "border-ttext"}  `}></div>
               )}
-              <div onClick={()=> setIsWallet(true)} className={`flex flex-row items-center p-4 gap-x-1 cursor-pointer group  rounded-[4px] hover:bg-sbgHover  ${isWidthReduced ? "justify-center" : "justify-start"}`}>
-                <div className=" flex flex-row justify-center items-center group-hover:text-[#eee] text-stext">
+              <div
+                onClick={() =>  isUserLoggedIn ?  setIsWallet(true) : setIsNotAccess(true)}
+                className={`flex flex-row items-center p-4 gap-x-1 group  rounded-[4px] ${isUserLoggedIn ? "hover:bg-sbgHover cursor-pointer " : " cursor-default text-ttext"}  ${
+                  isWidthReduced ? "justify-center" : "justify-start"
+                }`}
+              >
+                <div className= {`flex flex-row justify-center items-center ${isUserLoggedIn ? "group-hover:text-[#eee] text-stext " : " "}`}>
                   <WalletIcon sx={{ fontSize: 18 }} />
                 </div>
                 {!isWidthReduced && (
@@ -86,10 +101,12 @@ export default function Browse({
                 )}
               </div>
               <div
-                onClick={() => setIsVault(true)}
-                className={`flex flex-row items-center p-4 gap-x-1 cursor-pointer group  rounded-[4px] hover:bg-sbgHover  ${isWidthReduced ? "justify-center" : "justify-start"}`}
+                onClick={() =>  isUserLoggedIn ?  setIsVault(true) : setIsNotAccess(true)}
+                className={`flex flex-row items-center p-4 gap-x-1 group  rounded-[4px] ${isUserLoggedIn ? "hover:bg-sbgHover cursor-pointer " : " cursor-default text-ttext"}  ${
+                  isWidthReduced ? "justify-center" : "justify-start"
+                }`}
               >
-                <div className=" flex flex-row justify-center items-center group-hover:text-[#eee] text-stext">
+                <div className= {`flex flex-row justify-center items-center ${isUserLoggedIn ? "group-hover:text-[#eee] text-stext " : " "}`}>
                   <AccountBalanceWalletIcon sx={{ fontSize: 18 }} />
                 </div>
                 {!isWidthReduced && (
@@ -97,10 +114,13 @@ export default function Browse({
                 )}
               </div>
               <div
-                onClick={() => setIsStat(true)}
-                className={`flex flex-row items-center p-4 gap-x-1 cursor-pointer group  rounded-[4px] hover:bg-sbgHover  ${isWidthReduced ? "justify-center" : "justify-start"}`}
+              onClick={() =>  isUserLoggedIn ?  setIsStat(true) : setIsNotAccess(true)}
+               
+                className={`flex flex-row items-center p-4 gap-x-1 group  rounded-[4px] ${isUserLoggedIn ? "hover:bg-sbgHover cursor-pointer " : " cursor-default text-ttext"}  ${
+                  isWidthReduced ? "justify-center" : "justify-start"
+                }`}
               >
-                <div className=" flex flex-row justify-center items-center group-hover:text-[#eee] text-stext">
+                <div className= {`flex flex-row justify-center items-center ${isUserLoggedIn ? "group-hover:text-[#eee] text-stext " : " "}`}>
                   <AutoGraphIcon sx={{ fontSize: 18 }} />
                 </div>
                 {!isWidthReduced && (
@@ -109,10 +129,13 @@ export default function Browse({
               </div>
 
               <div
-                onClick={() => setIsNotification(true)}
-                className={`flex flex-row items-center p-4 gap-x-1 cursor-pointer group  rounded-[4px] hover:bg-sbgHover  ${isWidthReduced ? "justify-center" : "justify-start"}`}
+              onClick={() =>  isUserLoggedIn ?  setIsNotification(true) : setIsNotAccess(true)}
+              
+                className={`flex flex-row items-center p-4 gap-x-1 group  rounded-[4px] ${isUserLoggedIn ? "hover:bg-sbgHover cursor-pointer " : " cursor-default text-ttext"}  ${
+                  isWidthReduced ? "justify-center" : "justify-start"
+                }`}
               >
-                <div className=" flex flex-row justify-center items-center group-hover:text-[#eee] text-stext">
+               <div className= {`flex flex-row justify-center items-center ${isUserLoggedIn ? "group-hover:text-[#eee] text-stext " : " "}`}>
                   <NotificationsIcon sx={{ fontSize: 18 }} />
                 </div>
                 {!isWidthReduced && (
@@ -120,10 +143,15 @@ export default function Browse({
                 )}
               </div>
               {!isWidthReduced && (
-                <div className=" border-b-[2px] border-stext"></div>
+                <div className={`border-b-[2px] ${isUserLoggedIn ? "border-stext" : "border-ttext"}  `}></div>
               )}
-              <div onClick={()=>setIsLogOut(true)} className={`flex flex-row items-center p-4 gap-x-1 cursor-pointer group  rounded-[4px] hover:bg-sbgHover  ${isWidthReduced ? "justify-center" : "justify-start"}`}>
-                <div className=" flex flex-row justify-center items-center group-hover:text-[#eee] text-stext">
+              <div
+                onClick={() =>  isUserLoggedIn ?  setIsLogOut(true) : setIsNotAccess(true)}
+                className={`flex flex-row items-center p-4 gap-x-1 group  rounded-[4px] ${isUserLoggedIn ? "hover:bg-sbgHover cursor-pointer " : " cursor-default text-ttext"}  ${
+                  isWidthReduced ? "justify-center" : "justify-start"
+                }`}
+              >
+               <div className= {`flex flex-row justify-center items-center ${isUserLoggedIn ? "group-hover:text-[#eee] text-stext " : " "}`}>
                   <LogoutIcon sx={{ fontSize: 18 }} />
                 </div>
                 {!isWidthReduced && (
@@ -133,62 +161,128 @@ export default function Browse({
             </>
           )}
         </div>
-        <div onClick={()=> navigate("/")} className={`${pathname === "/" ? "bg-sbgHover": ""} flex flex-row items-center p-4 gap-x-1 cursor-pointer group  rounded-[4px] hover:bg-sbgHover  ${isWidthReduced ? "justify-center" : "justify-start"}`}>
-         <div  className= {`${pathname === "/" ? "group-text-[#eee]": "text-stext"} flex flex-row justify-center items-center group-hover:text-[#eee] `}>
-            <HomeIcon sx={{ fontSize: 18 }} />
-          </div>
-          {!isWidthReduced && (
-            <div className=" text-sm font-semibold">Home</div>
-          )}
-        </div>
-        <div onClick={()=> navigate("/casino")} className={`${pathname === "/casino" ? "bg-sbgHover": ""}  flex flex-row items-center p-4 gap-x-1 cursor-pointer group  rounded-[4px] hover:bg-sbgHover  ${isWidthReduced ? "justify-center" : "justify-start"}`}>
-        <div  className= {`${pathname === "/casino" ? "group-text-[#eee]": "text-stext"} flex flex-row justify-center items-center group-hover:text-[#eee] `}>
-            <CasinoIcon sx={{ fontSize: 18 }} />
-          </div>
-          {!isWidthReduced && (
-            <div className=" text-sm font-semibold">Casino</div>
-          )}
-        </div>
-        <div onClick={()=> navigate("/games")} className={`${pathname === "/games" ? "bg-sbgHover": ""}  flex flex-row items-center p-4 gap-x-1 cursor-pointer group  rounded-[4px] hover:bg-sbgHover  ${isWidthReduced ? "justify-center" : "justify-start"}`}>
-        <div  className= {`${pathname === "/games" ? "group-text-[#eee]": "text-stext"} flex flex-row justify-center items-center group-hover:text-[#eee] `}>
-            <GamesIcon sx={{ fontSize: 18 }} />
-          </div>
-          {!isWidthReduced && (
-            <div className=" text-sm font-semibold">Games</div>
-          )}
-        </div>
-        <div onClick={()=> navigate("/bets")} className={`${pathname === "/bets" ? "bg-sbgHover": ""} flex flex-row items-center p-4 gap-x-1 cursor-pointer group  rounded-[4px] hover:bg-sbgHover  ${isWidthReduced ? "justify-center" : "justify-start"}`}>
-          <div  className= {`${pathname === "/bets" ? "group-text-[#eee]": "text-stext"} flex flex-row justify-center items-center group-hover:text-[#eee] `}>
-            <ReceiptOutlinedIcon sx={{ fontSize: 18 }} />
-          </div>
-          {!isWidthReduced && (
-            <div className=" text-sm font-semibold">My Bets</div>
-          )}
-        </div>
-        <div onClick={()=> navigate("/favorite")} className={`${pathname === "/favorite" ? "bg-sbgHover": ""} flex flex-row items-center p-4 gap-x-1 cursor-pointer group  rounded-[4px] hover:bg-sbgHover  ${isWidthReduced ? "justify-center" : "justify-start"}`}>
-          <div className= {`${pathname === "/favorite" ? "group-text-[#eee]": "text-stext"} flex flex-row justify-center items-center group-hover:text-[#eee] `}>
-            <StarOutlineOutlinedIcon sx={{ fontSize: 18 }} />
-          </div>
-          {!isWidthReduced && (
-            <div className=" text-sm font-semibold">Favourite</div>
-          )}
-        </div>
 
-       
-        <div onClick={()=> setIsRecent(true)} className={`flex flex-row items-center p-4 gap-x-1 cursor-pointer group  rounded-[4px] hover:bg-sbgHover  ${isWidthReduced ? "justify-center" : "justify-start"}`}>
-          <div className=" flex flex-row justify-center items-center group-hover:text-[#eee] text-stext">
+        <div
+          onClick={() =>  isUserLoggedIn ?  setIsRecent(true) : setIsNotAccess(true)}
+          className={`flex flex-row items-center p-4 gap-x-1 group  rounded-[4px] ${isUserLoggedIn ? "hover:bg-sbgHover cursor-pointer " : " cursor-default text-ttext"}  ${
+            isWidthReduced ? "justify-center" : "justify-start"
+          }`}
+        >
+          <div className= {`flex flex-row justify-center items-center ${isUserLoggedIn ? "group-hover:text-[#eee] text-stext " : " "}`}>
             <HistoryOutlinedIcon sx={{ fontSize: 18 }} />
           </div>
           {!isWidthReduced && (
             <div className=" text-sm font-semibold">Recent</div>
           )}
         </div>
-        <div onClick={()=>setVip(true)} className={`flex flex-row items-center p-4 gap-x-1 cursor-pointer group  rounded-[4px] hover:bg-sbgHover  ${isWidthReduced ? "justify-center" : "justify-start"}`}>
+        <div
+          onClick={() => setVip(true)}
+          className={`flex flex-row items-center p-4 gap-x-1 cursor-pointer group  rounded-[4px] hover:bg-sbgHover  ${
+            isWidthReduced ? "justify-center" : "justify-start"
+          }`}
+        >
           <div className=" flex flex-row justify-center items-center group-hover:text-[#eee] text-stext">
             <EmojiEventsIcon sx={{ fontSize: 18 }} />
           </div>
+          {!isWidthReduced && <div className=" text-sm font-semibold">VIP</div>}
+        </div>
+      </div>
+      <div className="bg-sbg rounded-[4px] w-full flex flex-col">
+        <div
+          onClick={() => navigate("/")}
+          className={`${
+            pathname === "/" ? "bg-sbgHover" : ""
+          } flex flex-row items-center p-4 gap-x-1 cursor-pointer group  rounded-[4px] hover:bg-sbgHover  ${
+            isWidthReduced ? "justify-center" : "justify-start"
+          }`}
+        >
+          <div
+            className={`${
+              pathname === "/" ? "group-text-[#eee]" : "text-stext"
+            } flex flex-row justify-center items-center group-hover:text-[#eee] `}
+          >
+            <HomeIcon sx={{ fontSize: 18 }} />
+          </div>
           {!isWidthReduced && (
-            <div className=" text-sm font-semibold">VIP</div>
+            <div className=" text-sm font-semibold">Home</div>
+          )}
+        </div>
+        <div
+          onClick={() =>  navigate("/casino")}
+          className={`${
+            pathname === "/casino" ? "bg-sbgHover" : ""
+          }  flex flex-row items-center p-4 gap-x-1 cursor-pointer group  rounded-[4px] hover:bg-sbgHover  ${
+            isWidthReduced ? "justify-center" : "justify-start"
+          }`}
+        >
+          <div
+            className={`${
+              pathname === "/casino" ? "group-text-[#eee]" : "text-stext"
+            } flex flex-row justify-center items-center group-hover:text-[#eee] `}
+          >
+            <CasinoIcon sx={{ fontSize: 18 }} />
+          </div>
+          {!isWidthReduced && (
+            <div className=" text-sm font-semibold">Casino</div>
+          )}
+        </div>
+        <div
+          onClick={() =>  navigate("/games")}
+          className={`${
+            pathname === "/games" ? "bg-sbgHover" : ""
+          }  flex flex-row items-center p-4 gap-x-1 cursor-pointer group  rounded-[4px] hover:bg-sbgHover  ${
+            isWidthReduced ? "justify-center" : "justify-start"
+          }`}
+        >
+          <div
+            className={`${
+              pathname === "/games" ? "group-text-[#eee]" : "text-stext"
+            } flex flex-row justify-center items-center group-hover:text-[#eee] `}
+          >
+            <GamesIcon sx={{ fontSize: 18 }} />
+          </div>
+          {!isWidthReduced && (
+            <div className=" text-sm font-semibold">Games</div>
+          )}
+        </div>
+        <div
+          onClick={() => isUserLoggedIn ? navigate("/bets") : setIsNotAccess(true)}
+          
+          className={`${
+            pathname === "/bets" ? "bg-sbgHover" : ""
+          } flex flex-row items-center p-4 gap-x-1  group  rounded-[4px]${isUserLoggedIn ? "hover:bg-sbgHover cursor-pointer " : " cursor-default text-ttext"}  ${
+            isWidthReduced ? "justify-center" : "justify-start"
+          }`}
+        >
+          <div
+            className={`${
+              pathname === "/bets" ? "group-text-[#eee]" : ""
+            } flex flex-row justify-center items-center ${isUserLoggedIn ? "group-hover:text-[#eee] text-stext " : "text-ttext "}`}
+          >
+            <ReceiptOutlinedIcon sx={{ fontSize: 18 }} />
+          </div>
+          {!isWidthReduced && (
+            <div className=" text-sm font-semibold">My Bets</div>
+          )}
+        </div>
+        <div
+        onClick={() => isUserLoggedIn ? navigate("/favorite") : setIsNotAccess(true)}
+          
+          className={`${
+            pathname === "/favorite" ? "bg-sbgHover" : ""
+          } flex flex-row items-center p-4 gap-x-1  group  rounded-[4px] ${isUserLoggedIn ? "hover:bg-sbgHover cursor-pointer " : " cursor-default text-ttext"}  ${
+            isWidthReduced ? "justify-center" : "justify-start"
+          }`}
+        >
+          <div
+            className={`${
+              pathname === "/favorite" ? "group-text-[#eee]" : ""
+            } flex flex-row justify-center items-center ${isUserLoggedIn ? "group-hover:text-[#eee] text-stext " : " text-ttext"} `}
+          >
+            <StarOutlineOutlinedIcon sx={{ fontSize: 18 }} />
+          </div>
+          {!isWidthReduced && (
+            <div className=" text-sm font-semibold">Favourite</div>
           )}
         </div>
       </div>
@@ -202,12 +296,17 @@ export default function Browse({
             <div className=" border-b-[2px] border-stext"></div>
           </>
         )}
-        <div  className={`flex flex-row items-center p-4 gap-x-[6px] cursor-pointer group  rounded-[4px] hover:bg-sbgHover ${isWidthReduced ? "justify-center" : "justify-start"}`}>
+        <div
+        
+          className={`flex flex-row items-center p-4 gap-x-[6px]  group  rounded-[4px] ${isUserLoggedIn ? "hover:bg-sbgHover cursor-pointer " : " cursor-default text-ttext"}  ${
+            isWidthReduced ? "justify-center" : "justify-start"
+          }`}
+        >
           <div className=" flex flex-row justify-center items-center group-hover:text-[#eee] text-stext">
-            <img className=" w-[18px] min-w-[18px]" src="baccarat.png" alt="" />
+            <img className=" w-[18px] min-w-[18px] grayscale" src="baccarat.png" alt="" />
           </div>
           {!isWidthReduced && (
-            <div className=" text-sm font-semibold">Baccarat</div>
+            <div className=" text-sm font-semibold ">Baccarat</div>
           )}
         </div>
       </div>
@@ -215,7 +314,15 @@ export default function Browse({
   );
 }
 
-export function BrowseWithTopNav({ setIsNotification, setIsVault, setIsStat, setIsRecent, setVip,setIsWallet ,setIsLogOut}) {
+export function BrowseWithTopNav({
+  setIsNotification,
+  setIsVault,
+  setIsStat,
+  setIsRecent,
+  setVip,
+  setIsWallet,
+  setIsLogOut,setIsNotAccess
+}) {
   const [isWidthReduced, setIsWidthReduced] = useState(false);
   const [isWidthReducable, setisWidthReducable] = useState(true);
   useEffect(() => {
@@ -273,10 +380,11 @@ export function BrowseWithTopNav({ setIsNotification, setIsVault, setIsStat, set
         setIsVault={setIsVault}
         setIsNotification={setIsNotification}
         isWidthReduced={isWidthReduced}
-         setIsRecent={setIsRecent}
-         setVip={setVip}
-         setIsWallet={setIsWallet}
-         setIsLogOut={setIsLogOut}
+        setIsRecent={setIsRecent}
+        setVip={setVip}
+        setIsWallet={setIsWallet}
+        setIsLogOut={setIsLogOut}
+        setIsNotAccess={setIsNotAccess}
       />
     </div>
   );
