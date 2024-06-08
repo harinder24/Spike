@@ -19,7 +19,7 @@ export default function Nav({
   const [isUserLogedIn, setIsUserLogedIn] = useState(true);
   const [isProfileOpened, setIsProfileOpened] = useState(false);
   return (
-    <div className="h-[60px] w-full max-[750px]:w-screen flex flex-row">
+    <div className="min-h-[60px] w-full max-[750px]:w-screen flex flex-row">
       <div className=" flex-1 bg-sbg boxshadow flex flex-row justify-center  h-full w-full">
         <div className=" max-w-[1200px]  mx-10 max-[750px]:mx-4  flex-1 h-full flex flex-row justify-between items-center">
           <div className="ds text-4xl max-[400px]:hidden">Spike</div>
@@ -52,8 +52,8 @@ export default function Nav({
                 </div>
                 {isProfileOpened && (
                   <>
-                    <div className="absolute bottom-[-10px] left-[12px] border-transparent border-b-[#eee] border-[8px] border-t-[0px]"></div>
-                    <div className="  absolute bottom-[-207px] bg-[#eee] flex flex-col left-[-40px] rounded-[4px] overflow-hidden py-1 ">
+                    <div className="absolute bottom-[-10px] left-[12px] border-transparent border-b-[#eee] border-[8px] border-t-[0px] z-40"></div>
+                    <div className="  absolute bottom-[-207px] bg-[#eee] flex flex-col left-[-40px] rounded-[4px] overflow-hidden py-1 z-40">
                       <div
                         onClick={() => setIsWallet(true)}
                         className="text-[rgba(47,69,83)] hover:bg-[rgb(177,186,211)] group h-[38px]  flex flex-row items-center gap-x-[6px] px-3 text-xs font-semibold cursor-pointer "

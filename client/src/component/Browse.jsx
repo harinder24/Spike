@@ -11,18 +11,23 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import StarOutlineOutlinedIcon from "@mui/icons-material/StarOutlineOutlined";
 import HistoryOutlinedIcon from "@mui/icons-material/HistoryOutlined";
 import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
-
+import CasinoIcon from "@mui/icons-material/Casino";
+import GamesIcon from "@mui/icons-material/Games";
 import MenuIcon from "@mui/icons-material/Menu";
+import HomeIcon from '@mui/icons-material/Home';
+import { useNavigate, useLocation } from 'react-router-dom';
 export default function Browse({
   isWidthReduced,
   setIsNotification,
   setIsVault,
   setIsStat,
    setIsRecent,
-   setVip,setIsWallet,setIsLogOut
+   setVip,setIsWallet,setIsLogOut,isMobile=false
 }) {
   const [isProfileExpanded, setIsProfileExpanded] = useState(false);
+  const {pathname} = useLocation()
   const [isProfileExpandedWidth, setIsProfileExpandedWidth] = useState(316);
+  const navigate = useNavigate()
   useEffect(() => {
     if (isWidthReduced) {
       setIsProfileExpanded(true);
@@ -35,7 +40,7 @@ export default function Browse({
 
   return (
     <div
-      className={` h-full p-4 flex flex-col gap-y-4 overflow-y-auto overflow-x-hidden`}
+      className={`${isMobile ? "bg-bg" : ""} h-full p-4 flex flex-col gap-y-4 overflow-y-auto overflow-x-hidden `}
     >
       <div className="bg-sbg rounded-[4px] w-full flex flex-col ">
         <div
@@ -72,7 +77,7 @@ export default function Browse({
               {!isWidthReduced && (
                 <div className=" border-b-[2px] border-stext"></div>
               )}
-              <div onClick={()=> setIsWallet(true)} className="flex flex-row items-center p-4 gap-x-1 cursor-pointer group  rounded-[4px] hover:bg-sbgHover">
+              <div onClick={()=> setIsWallet(true)} className={`flex flex-row items-center p-4 gap-x-1 cursor-pointer group  rounded-[4px] hover:bg-sbgHover  ${isWidthReduced ? "justify-center" : "justify-start"}`}>
                 <div className=" flex flex-row justify-center items-center group-hover:text-[#eee] text-stext">
                   <WalletIcon sx={{ fontSize: 18 }} />
                 </div>
@@ -82,7 +87,7 @@ export default function Browse({
               </div>
               <div
                 onClick={() => setIsVault(true)}
-                className="flex flex-row items-center p-4 gap-x-1 cursor-pointer group  rounded-[4px] hover:bg-sbgHover"
+                className={`flex flex-row items-center p-4 gap-x-1 cursor-pointer group  rounded-[4px] hover:bg-sbgHover  ${isWidthReduced ? "justify-center" : "justify-start"}`}
               >
                 <div className=" flex flex-row justify-center items-center group-hover:text-[#eee] text-stext">
                   <AccountBalanceWalletIcon sx={{ fontSize: 18 }} />
@@ -93,7 +98,7 @@ export default function Browse({
               </div>
               <div
                 onClick={() => setIsStat(true)}
-                className="flex flex-row items-center p-4 gap-x-1 cursor-pointer group  rounded-[4px] hover:bg-sbgHover"
+                className={`flex flex-row items-center p-4 gap-x-1 cursor-pointer group  rounded-[4px] hover:bg-sbgHover  ${isWidthReduced ? "justify-center" : "justify-start"}`}
               >
                 <div className=" flex flex-row justify-center items-center group-hover:text-[#eee] text-stext">
                   <AutoGraphIcon sx={{ fontSize: 18 }} />
@@ -105,7 +110,7 @@ export default function Browse({
 
               <div
                 onClick={() => setIsNotification(true)}
-                className="flex flex-row items-center p-4 gap-x-1 cursor-pointer group  rounded-[4px] hover:bg-sbgHover"
+                className={`flex flex-row items-center p-4 gap-x-1 cursor-pointer group  rounded-[4px] hover:bg-sbgHover  ${isWidthReduced ? "justify-center" : "justify-start"}`}
               >
                 <div className=" flex flex-row justify-center items-center group-hover:text-[#eee] text-stext">
                   <NotificationsIcon sx={{ fontSize: 18 }} />
@@ -117,7 +122,7 @@ export default function Browse({
               {!isWidthReduced && (
                 <div className=" border-b-[2px] border-stext"></div>
               )}
-              <div onClick={()=>setIsLogOut(true)} className="flex flex-row items-center p-4 gap-x-1 cursor-pointer group  rounded-[4px] hover:bg-sbgHover">
+              <div onClick={()=>setIsLogOut(true)} className={`flex flex-row items-center p-4 gap-x-1 cursor-pointer group  rounded-[4px] hover:bg-sbgHover  ${isWidthReduced ? "justify-center" : "justify-start"}`}>
                 <div className=" flex flex-row justify-center items-center group-hover:text-[#eee] text-stext">
                   <LogoutIcon sx={{ fontSize: 18 }} />
                 </div>
@@ -128,8 +133,40 @@ export default function Browse({
             </>
           )}
         </div>
-        <div className="flex flex-row items-center p-4 gap-x-1 cursor-pointer group  rounded-[4px] hover:bg-sbgHover">
-          <div className=" flex flex-row justify-center items-center group-hover:text-[#eee] text-stext">
+        <div onClick={()=> navigate("/")} className={`${pathname === "/" ? "bg-sbgHover": ""} flex flex-row items-center p-4 gap-x-1 cursor-pointer group  rounded-[4px] hover:bg-sbgHover  ${isWidthReduced ? "justify-center" : "justify-start"}`}>
+         <div  className= {`${pathname === "/" ? "group-text-[#eee]": "text-stext"} flex flex-row justify-center items-center group-hover:text-[#eee] `}>
+            <HomeIcon sx={{ fontSize: 18 }} />
+          </div>
+          {!isWidthReduced && (
+            <div className=" text-sm font-semibold">Home</div>
+          )}
+        </div>
+        <div onClick={()=> navigate("/casino")} className={`${pathname === "/casino" ? "bg-sbgHover": ""}  flex flex-row items-center p-4 gap-x-1 cursor-pointer group  rounded-[4px] hover:bg-sbgHover  ${isWidthReduced ? "justify-center" : "justify-start"}`}>
+        <div  className= {`${pathname === "/casino" ? "group-text-[#eee]": "text-stext"} flex flex-row justify-center items-center group-hover:text-[#eee] `}>
+            <CasinoIcon sx={{ fontSize: 18 }} />
+          </div>
+          {!isWidthReduced && (
+            <div className=" text-sm font-semibold">Casino</div>
+          )}
+        </div>
+        <div onClick={()=> navigate("/games")} className={`${pathname === "/games" ? "bg-sbgHover": ""}  flex flex-row items-center p-4 gap-x-1 cursor-pointer group  rounded-[4px] hover:bg-sbgHover  ${isWidthReduced ? "justify-center" : "justify-start"}`}>
+        <div  className= {`${pathname === "/games" ? "group-text-[#eee]": "text-stext"} flex flex-row justify-center items-center group-hover:text-[#eee] `}>
+            <GamesIcon sx={{ fontSize: 18 }} />
+          </div>
+          {!isWidthReduced && (
+            <div className=" text-sm font-semibold">Games</div>
+          )}
+        </div>
+        <div onClick={()=> navigate("/bets")} className={`${pathname === "/bets" ? "bg-sbgHover": ""} flex flex-row items-center p-4 gap-x-1 cursor-pointer group  rounded-[4px] hover:bg-sbgHover  ${isWidthReduced ? "justify-center" : "justify-start"}`}>
+          <div  className= {`${pathname === "/bets" ? "group-text-[#eee]": "text-stext"} flex flex-row justify-center items-center group-hover:text-[#eee] `}>
+            <ReceiptOutlinedIcon sx={{ fontSize: 18 }} />
+          </div>
+          {!isWidthReduced && (
+            <div className=" text-sm font-semibold">My Bets</div>
+          )}
+        </div>
+        <div onClick={()=> navigate("/favorite")} className={`${pathname === "/favorite" ? "bg-sbgHover": ""} flex flex-row items-center p-4 gap-x-1 cursor-pointer group  rounded-[4px] hover:bg-sbgHover  ${isWidthReduced ? "justify-center" : "justify-start"}`}>
+          <div className= {`${pathname === "/favorite" ? "group-text-[#eee]": "text-stext"} flex flex-row justify-center items-center group-hover:text-[#eee] `}>
             <StarOutlineOutlinedIcon sx={{ fontSize: 18 }} />
           </div>
           {!isWidthReduced && (
@@ -137,15 +174,8 @@ export default function Browse({
           )}
         </div>
 
-        <div className="flex flex-row items-center p-4 gap-x-1 cursor-pointer group  rounded-[4px] hover:bg-sbgHover">
-          <div className=" flex flex-row justify-center items-center group-hover:text-[#eee] text-stext">
-            <ReceiptOutlinedIcon sx={{ fontSize: 18 }} />
-          </div>
-          {!isWidthReduced && (
-            <div className=" text-sm font-semibold">My Bets</div>
-          )}
-        </div>
-        <div onClick={()=> setIsRecent(true)} className="flex flex-row items-center p-4 gap-x-1 cursor-pointer group  rounded-[4px] hover:bg-sbgHover">
+       
+        <div onClick={()=> setIsRecent(true)} className={`flex flex-row items-center p-4 gap-x-1 cursor-pointer group  rounded-[4px] hover:bg-sbgHover  ${isWidthReduced ? "justify-center" : "justify-start"}`}>
           <div className=" flex flex-row justify-center items-center group-hover:text-[#eee] text-stext">
             <HistoryOutlinedIcon sx={{ fontSize: 18 }} />
           </div>
@@ -153,7 +183,7 @@ export default function Browse({
             <div className=" text-sm font-semibold">Recent</div>
           )}
         </div>
-        <div onClick={()=>setVip(true)} className="flex flex-row items-center p-4 gap-x-1 cursor-pointer group  rounded-[4px] hover:bg-sbgHover">
+        <div onClick={()=>setVip(true)} className={`flex flex-row items-center p-4 gap-x-1 cursor-pointer group  rounded-[4px] hover:bg-sbgHover  ${isWidthReduced ? "justify-center" : "justify-start"}`}>
           <div className=" flex flex-row justify-center items-center group-hover:text-[#eee] text-stext">
             <EmojiEventsIcon sx={{ fontSize: 18 }} />
           </div>
@@ -162,7 +192,7 @@ export default function Browse({
           )}
         </div>
       </div>
-      <div className="bg-sbg rounded-[4px] w-full flex flex-col overflow-hidden">
+      <div className="bg-sbg rounded-[4px] w-full flex flex-col ">
         {!isWidthReduced && (
           <>
             {" "}
@@ -172,9 +202,9 @@ export default function Browse({
             <div className=" border-b-[2px] border-stext"></div>
           </>
         )}
-        <div className="flex flex-row items-center p-4 gap-x-[6px] cursor-pointer group  rounded-[4px] hover:bg-sbgHover">
+        <div  className={`flex flex-row items-center p-4 gap-x-[6px] cursor-pointer group  rounded-[4px] hover:bg-sbgHover ${isWidthReduced ? "justify-center" : "justify-start"}`}>
           <div className=" flex flex-row justify-center items-center group-hover:text-[#eee] text-stext">
-            <img className=" w-[18px]" src="baccarat.png" alt="" />
+            <img className=" w-[18px] min-w-[18px]" src="baccarat.png" alt="" />
           </div>
           {!isWidthReduced && (
             <div className=" text-sm font-semibold">Baccarat</div>
@@ -219,7 +249,7 @@ export function BrowseWithTopNav({ setIsNotification, setIsVault, setIsStat, set
   return (
     <div
       className={`transition-all duration-500 ease-in-out ${
-        isWidthReduced ? "w-[82px]" : "w-[240px]"
+        isWidthReduced ? "w-[100px]" : "w-[240px]"
       }   h-full flex flex-col bg-bg max-[750px]:hidden`}
     >
       <div className="h-[60px] w-full flex flex-row sticky top-0">

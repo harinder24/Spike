@@ -10,7 +10,7 @@ export default function Wallet({setIsWallet}) {
     setIsWallet(false);
   };
   return (
-    <BgOpacity>
+    <BgOpacity onClickHandler={onClickHandler}>
       <div className=" p-4 flex flex-col bg-sbg w-[500px] rounded-lg  max-[532px]:w-full relative  caret-transparent  gap-4 max-h-[400px]">
         {!isWithdraw && !isDeposit && (
           <WalletWrapper

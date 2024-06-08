@@ -26,7 +26,7 @@ export default function Logout({setIsLogOut}) {
         <div className="text-xs font-semibold mt-6">
         Are you sure you want to end your session and log out?
         </div>
-        <div className="w-full h-[52px] mt-4 max-[750px]:mt-auto rounded-[4px] shadow-custom bg-redbg hover:bg-redbgHover flex flex-row justify-center items-center cursor-pointer">
+        <div className="w-full h-[52px] mt-4  rounded-[4px] shadow-custom bg-redbg hover:bg-redbgHover flex flex-row justify-center items-center cursor-pointer">
           <div className=" text-sm font-semibold ">Log out</div>
         </div>
 

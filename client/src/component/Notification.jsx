@@ -40,7 +40,7 @@ export default function Notification({ setIsNotification, setisLoading }) {
                     <CampaignIcon sx={{fontSize: 100}}/>
                 </div>
                 <div className=" text-sm text-stext text-center">
-                    That's all notifical you have got
+                    That's all notification you have got
                 </div>
 
             </div>

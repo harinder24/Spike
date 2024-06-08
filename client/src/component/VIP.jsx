@@ -2,7 +2,7 @@ import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 import React, { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import BgOpacity from "./BgOpacity";
-import { YourProgress } from "./HomeMainContent";
+import { YourProgress } from "../screen/Home";
 import CasinoIcon from "@mui/icons-material/Casino";
 import GamesIcon from "@mui/icons-material/Games";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
@@ -10,14 +10,14 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import DiamondIcon from "@mui/icons-material/Diamond";
 import StarIcon from "@mui/icons-material/Star";
-export default function VIP({setVip}) {
+export default function VIP({ setVip }) {
   const [stage, setStage] = useState(1);
 
   const onClickHandler = () => {
-    setVip(false)
+    setVip(false);
   };
   return (
-    <BgOpacity>
+    <BgOpacity onClickHandler={onClickHandler}>
       <div className=" p-4 flex flex-col bg-sbg w-[500px] rounded-lg  max-[532px]:w-full relative  caret-transparent  gap-4 max-h-[400px]">
         <div className=" flex flex-row justify-between">
           <div className="flex flex-row gap-x-[6px] text-stext items-center">
@@ -71,17 +71,23 @@ export default function VIP({setVip}) {
   );
 }
 
-function StageThree(){
-    return(
-        <>
-        <div className="text-[#eee] font-semibold text-sm text-center">Available Rakeback</div>
-        <div className="text-stext font-semibold text-xs text-center">CA$322.23</div>
-        <div className="w-full h-[52px] mt-4 max-[750px]:mt-auto rounded-[4px] shadow-custom bg-button2 hover:bg-buttonHover2 flex flex-row justify-center items-center cursor-pointer">
-        <div className="text-black text-sm font-semibold ">Clain Rakeback</div>
+function StageThree() {
+  return (
+    <>
+      <div className="text-[#eee] font-semibold text-sm text-center">
+        Available Rakeback
       </div>
-      <div className="text-stext font-semibold text-xs text-center">Rakeback is accumulated each time you place a bet and VIP tier.</div>
-        </>
-    )
+      <div className="text-stext font-semibold text-xs text-center">
+        CA$322.23
+      </div>
+      <div className="w-full h-[52px] mt-4 max-[750px]:mt-auto rounded-[4px] shadow-custom bg-button2 hover:bg-buttonHover2 flex flex-row justify-center items-center cursor-pointer">
+        <div className="text-black text-sm font-semibold ">Claim Rakeback</div>
+      </div>
+      <div className="text-stext font-semibold text-xs text-center">
+        Rakeback is accumulated each time you place a bet and VIP tier.
+      </div>
+    </>
+  );
 }
 
 function StageTwo() {

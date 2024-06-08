@@ -2,10 +2,10 @@ import React from "react";
 import BgOpacity from "./BgOpacity";
 import CloseIcon from "@mui/icons-material/Close";
 import AutoGraphIcon from "@mui/icons-material/AutoGraph";
-import { YourProgress } from "./HomeMainContent";
-export default function Stats({setIsStat}) {
+import { YourProgress } from "../screen/Home";
+export default function Stats({ setIsStat }) {
   const onClickHandler = () => {
-    setIsStat(false)
+    setIsStat(false);
   };
   return (
     <BgOpacity onClickHandler={onClickHandler}>
@@ -31,26 +31,26 @@ export default function Stats({setIsStat}) {
           <YourProgress isStat={true} />
         </div>
         <div className="flex flex-col w-full gap-2 font-semibold">
-            <div className="flex flex-row w-full gap-2">
-                <div className="p-4 rounded-[4px] bg-bg flex-1">
-                    <div className="text-sm text-stext">Total bets</div>
-                    <div className=" text-xl">22,221</div>
-                </div>
-                <div className="p-4 rounded-[4px] bg-bg flex-1">
-                    <div className="text-sm text-stext">Number of Wins</div>
-                    <div className=" text-xl">22,221</div>
-                </div>
+          <div className="flex flex-row w-full gap-2">
+            <div className="p-4 rounded-[4px] bg-bg flex-1">
+              <div className="text-sm text-stext">Total bets</div>
+              <div className=" text-xl">22,221</div>
             </div>
-            <div className="flex flex-row w-full gap-2">
-                <div className="p-4 rounded-[4px] bg-bg flex-1">
-                    <div className="text-sm text-stext">Number of losses</div>
-                    <div className=" text-xl">22,221</div>
-                </div>
-                <div className="p-4 rounded-[4px] bg-bg flex-1">
-                    <div className="text-sm text-stext">Waggered</div>
-                    <div className=" text-xl">$22,221</div>
-                </div>
+            <div className="p-4 rounded-[4px] bg-bg flex-1">
+              <div className="text-sm text-stext">Number of Wins</div>
+              <div className=" text-xl">22,221</div>
             </div>
+          </div>
+          <div className="flex flex-row w-full gap-2">
+            <div className="p-4 rounded-[4px] bg-bg flex-1">
+              <div className="text-sm text-stext">Number of losses</div>
+              <div className=" text-xl">22,221</div>
+            </div>
+            <div className="p-4 rounded-[4px] bg-bg flex-1">
+              <div className="text-sm text-stext">Waggered</div>
+              <div className=" text-xl">$22,221</div>
+            </div>
+          </div>
         </div>
       </div>
     </BgOpacity>
