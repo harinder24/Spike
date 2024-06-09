@@ -1,6 +1,7 @@
 import React from "react";
 import GamesIcon from "@mui/icons-material/Games";
-import { GamesAndCasinoIndividualWrapper } from "../screen/Favorite";
+import { GamesAndCasinoIndividualWrapper } from "./Favorite";
+
 
 export default function Games() {
   return (

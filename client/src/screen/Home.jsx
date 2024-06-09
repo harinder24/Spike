@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import CasinoIcon from "@mui/icons-material/Casino";
 import GamesIcon from "@mui/icons-material/Games";
+import { useNavigate } from "react-router-dom";
 export default function Home({ setIsRegister, setIsSignIn }) {
+
   return (
     <div className="w-full flex flex-row bg-bg  justify-center flex-1 overflow-y-auto overflow-x-hidden">
       <div className=" max-w-[1200px] h-full  flex flex-col  max-[600px]:flex-col ">
@@ -20,9 +22,13 @@ export default function Home({ setIsRegister, setIsSignIn }) {
 }
 
 function MiddleContent() {
+  const navigate = useNavigate();
   return (
     <div className="flex flex-row p-10 max-[750px]:flex-col max-[750px]:px-4 gap-10  bg-sbg">
-      <div className="flex flex-col gap-y-4  rounded-md cursor-pointer flex-1 ">
+      <div
+        onClick={() => navigate("/casino")}
+        className="flex flex-col gap-y-4  rounded-md cursor-pointer flex-1 "
+      >
         <div className=" text-stext flex flex-row items-center gap-x-1  group w-fit">
           <div className=" group-hover:text-[#eee] flex flex-row justify-center items-center">
             <CasinoIcon sx={{ fontSize: 18 }} />
@@ -44,7 +50,10 @@ function MiddleContent() {
           <div>Go to Casino</div>
         </div>
       </div>
-      <div className="flex flex-col gap-y-4  rounded-md cursor-pointer flex-1 ">
+      <div
+        onClick={() => navigate("/games")}
+        className="flex flex-col gap-y-4  rounded-md cursor-pointer flex-1 "
+      >
         <div className=" text-stext flex flex-row items-center gap-x-1  group w-fit">
           <div className=" group-hover:text-[#eee] flex flex-row justify-center items-center">
             <GamesIcon sx={{ fontSize: 18 }} />

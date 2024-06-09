@@ -1,5 +1,4 @@
 import React from "react";
-import StarOutlineOutlinedIcon from "@mui/icons-material/StarOutlineOutlined";
 import CasinoIcon from "@mui/icons-material/Casino";
 import { GamesAndCasinoIndividualWrapper } from "./Favorite";
 
