@@ -1,3 +1,4 @@
+import { ObjectId } from "mongodb";
 import mongoose from "mongoose";
 const userSchema = new mongoose.Schema({
   _id: String,
@@ -31,6 +32,10 @@ const userSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  vault: {
+    type: Number,
+    default: 0,
+  },
   waggered: {
     type: Number,
     default: 0,
@@ -42,6 +47,39 @@ const userSchema = new mongoose.Schema({
   losses: {
     type: Number,
     default: 0,
+  },
+  numOfBets: {
+    type: Number,
+    default: 0,
+  },
+  level:{
+    type: Number,
+    default: 1
+  },
+  favorite: [String],
+  recent: [String],
+  bets: [ObjectId],
+  notification: {
+    isRead: {
+      type: Boolean,
+      default: true,
+    },
+    list: [
+      {
+        type: {
+          type: String,
+        },
+        title: {
+          type: String,
+        },
+        text: {
+          type: String,
+        },
+        timeStamp: {
+          type: Number,
+        },
+      },
+    ],
   },
 });
 

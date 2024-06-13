@@ -44,3 +44,10 @@ input:-webkit-autofill:active {
 
   -webkit-text-fill-color: #eee;
 }
+@keyframes width100To0Animation {
+  0% { width: 100%; }
+  100% { width: 0%; }
+}
+.animate-width-3s {
+  animation: width100To0Animation 3s ease-in-out;
+}

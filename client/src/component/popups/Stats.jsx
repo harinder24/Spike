@@ -1,12 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import BgOpacity from "../layout/BgOpacity";
 import CloseIcon from "@mui/icons-material/Close";
 import AutoGraphIcon from "@mui/icons-material/AutoGraph";
 import { YourProgress } from "../../screen/Home";
+import { useAuth } from "../layout/AuthProvider";
+import { getUserStats } from "../../api/dataFetch";
 
 export default function Stats({ setIsStat }) {
   const onClickHandler = () => {
     setIsStat(false);
+  };
+  const [data, setData] = useState(null)
+  const {token, user} = useAuth()
+  useEffect(() => {
+    if (token) {
+      fetchData();
+    }
+  }, [token]);
+  const fetchData = async () => {
+    try {
+      const result = await getUserStats(token);
+      setData(result.data);
+    } catch (error) {}
   };
   return (
     <BgOpacity onClickHandler={onClickHandler}>
@@ -24,9 +39,9 @@ export default function Stats({ setIsStat }) {
           </div>
         </div>
         <div className="flex-1 overflow-y-auto flex flex-col">
-          <div className="text-sm text-stext font-semibold">hss24</div>
+          <div className="text-sm text-stext font-semibold">{user?.username}</div>
           <div className="text-xs text-stext mt-1">
-            Joined on <span className="font-semibold">February 18, 2024</span>
+            Joined on <span className="font-semibold">{data?.dateCreated}</span>
           </div>
 
           <YourProgress isStat={true} />
@@ -35,21 +50,21 @@ export default function Stats({ setIsStat }) {
           <div className="flex flex-row w-full gap-2">
             <div className="p-4 rounded-[4px] bg-bg flex-1">
               <div className="text-sm text-stext">Total bets</div>
-              <div className=" text-xl">22,221</div>
+              <div className=" text-xl">{data && (data?.numOfBets).toLocaleString()}</div>
             </div>
             <div className="p-4 rounded-[4px] bg-bg flex-1">
               <div className="text-sm text-stext">Number of Wins</div>
-              <div className=" text-xl">22,221</div>
+              <div className=" text-xl">{data && (data?.wins).toLocaleString()}</div>
             </div>
           </div>
           <div className="flex flex-row w-full gap-2">
             <div className="p-4 rounded-[4px] bg-bg flex-1">
               <div className="text-sm text-stext">Number of losses</div>
-              <div className=" text-xl">22,221</div>
+              <div className=" text-xl">{data && (data?.losses).toLocaleString()}</div>
             </div>
             <div className="p-4 rounded-[4px] bg-bg flex-1">
               <div className="text-sm text-stext">Waggered</div>
-              <div className=" text-xl">$22,221</div>
+              <div className=" text-xl">${data && (data?.waggered).toLocaleString()}</div>
             </div>
           </div>
         </div>

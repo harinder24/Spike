@@ -3,8 +3,10 @@ import StarBorderIcon from "@mui/icons-material/StarBorder";
 import CasinoIcon from "@mui/icons-material/Casino";
 import GamesIcon from "@mui/icons-material/Games";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../component/layout/AuthProvider";
+import DiamondIcon from "@mui/icons-material/Diamond";
+import StarIcon from "@mui/icons-material/Star";
 export default function Home({ setIsRegister, setIsSignIn }) {
-
   return (
     <div className="w-full flex flex-row bg-bg  justify-center flex-1 overflow-y-auto overflow-x-hidden">
       <div className=" max-w-[1200px] h-full  flex flex-col  max-[600px]:flex-col ">
@@ -89,13 +91,15 @@ function LeftContent() {
 }
 
 function RightContent({ setIsRegister, setIsSignIn }) {
-  const [isUserLogedIn, setIsUserLogedIn] = useState(false);
+  const { user } = useAuth();
   return (
     <div className=" flex-1 flex flex-row items-center max-[750px]:w-screen">
       <div className="w-full flex flex-col p-10 max-[750px]:px-4">
-        {isUserLogedIn ? (
+        {user ? (
           <>
-            <div className=" text-lg font-semibold">Welcome back, hss24</div>
+            <div className=" text-lg font-semibold">
+              Welcome back, {user.username}
+            </div>
             <YourProgress />
           </>
         ) : (
@@ -132,39 +136,92 @@ function RightContent({ setIsRegister, setIsSignIn }) {
 }
 
 export function YourProgress({ isStat = false }) {
+  const { user, token } = useAuth();
+  const [width, setWidth] = useState(0);
+
+  const levelMatrix = {
+    1: ["Bronze", "text-bronze"],
+    2: ["Silver", "text-silver"],
+    3: ["Gold", "text-gold"],
+    4: ["Platinum", "text-platinum"],
+    5: ["Diamond", "text-diamond"],
+  };
+  const [data, setData] = useState({
+    level: 1,
+    waggered: 0,
+  });
+  useEffect(() => {
+    if (token) {
+      fetchData();
+    }
+  }, [token]);
+  const fetchData = async () => {
+    try {
+      const result = await getUserVipProgress(token);
+      setData(result.data);
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    if (data) {
+      const widthPercentage = (data.waggered / (10 ** data.level * 25)) * 100;
+      if(widthPercentage > 100){
+        const num = 100
+        setWidth(num.toFixed(2))
+      }else{
+        setWidth(widthPercentage.toFixed(2));
+      }
+     
+    }
+  }, [data]);
+
   return (
     <>
       {isStat && (
-        <div className="mt-4 w-fit p-1 rounded-[4px] bg-bg text-bronze">
-          <StarBorderIcon />
+        <div className={`mt-4 w-fit p-1 rounded-[4px] bg-bg ${levelMatrix[data.level][1]}`}>
+          {data.level  < 4 && <StarBorderIcon />}
+          {data.level  === 4 && <StarIcon />}
+          {data.level  === 5 && <DiamondIcon />}
         </div>
       )}
       <div className="flex flex-row justify-between text-sm font-semibold mt-4">
         <div className="">Your VIP Progress</div>
-        <div>89.33%</div>
+        <div>{width}%</div>
       </div>
       <div
         className={`w-full rounded-full h-3 ${
           isStat ? "bg-bg" : "bg-sbg"
         }  mt-2`}
       >
-        <div className=" w-[33%] bg-green h-full rounded-full"></div>
+        <div
+          style={{ width: `${width}%` }}
+          className={` bg-green h-full rounded-full`}
+        ></div>
       </div>
       <div className="mt-4 flex flex-row justify-between text-sm font-semibold">
         <div className=" flex flex-row items-center gap-x-1">
-          <div className=" text-bronze flex flex-row items-center">
+          <div className= {`${levelMatrix[data.level][1]} flex flex-row items-center`}>
             {" "}
-            <StarBorderIcon sx={{ fontSize: 18 }} />
+         
+            {data.level  < 4 && <StarBorderIcon  sx={{ fontSize: 18 }}/>}
+          {data.level  === 4 && <StarIcon  sx={{ fontSize: 18 }}/>}
+          {data.level  === 5 && <DiamondIcon  sx={{ fontSize: 18 }}/>}
           </div>
-          <div>Bronze</div>
+          <div>{levelMatrix[data.level][0]}</div>
         </div>
-        <div className=" flex flex-row items-center gap-x-1">
-          <div className=" text-silver flex flex-row items-center">
-            {" "}
-            <StarBorderIcon sx={{ fontSize: 18 }} />
+        {data.level !== 5 && (
+          <div className=" flex flex-row items-center gap-x-1">
+            <div
+              className={`${levelMatrix[data.level + 1][1]} flex flex-row items-center`}
+            >
+              {" "}
+              {data.level  < 4 && <StarBorderIcon  sx={{ fontSize: 18 }}/>}
+          {data.level  === 4 && <StarIcon  sx={{ fontSize: 18 }}/>}
+          {data.level  === 5 && <DiamondIcon  sx={{ fontSize: 18 }}/>}
+            </div>
+            <div> {levelMatrix[data.level + 1][0]}</div>
           </div>
-          <div>Silver</div>
-        </div>
+        )}
       </div>{" "}
     </>
   );

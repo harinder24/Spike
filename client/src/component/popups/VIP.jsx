@@ -11,17 +11,20 @@ import StarBorderIcon from "@mui/icons-material/StarBorder";
 import DiamondIcon from "@mui/icons-material/Diamond";
 import StarIcon from "@mui/icons-material/Star";
 import { YourProgress } from "../../screen/Home";
+import { useAuth } from "../layout/AuthProvider";
+import { getUserVipProgress } from "../../api/dataFetch";
 export default function VIP({ setVip }) {
   const [stage, setStage] = useState(1);
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(true);
+  const { user } = useAuth();
   const onClickHandler = () => {
     setVip(false);
   };
   useEffect(() => {
-    if (!isUserLoggedIn) {
+    if (!user) {
       setStage(2);
     }
-  }, [isUserLoggedIn]);
+  }, [user]);
+
   return (
     <BgOpacity onClickHandler={onClickHandler}>
       <div className=" p-4 flex flex-col bg-sbg w-[500px] rounded-lg  max-[532px]:w-full relative  caret-transparent  gap-4 max-h-[80svh]">
@@ -41,10 +44,10 @@ export default function VIP({ setVip }) {
           <div className="flex flex-row justify-center">
             <div
               className={`rounded-full p-1 flex flex-row gap-x-1 ${
-                isUserLoggedIn ? "bg-bg" : ""
+                user ? "bg-bg" : ""
               } `}
             >
-              {isUserLoggedIn && (
+              {user && (
                 <div
                   onClick={() => setStage(1)}
                   className={` ${
@@ -59,12 +62,12 @@ export default function VIP({ setVip }) {
                 className={` ${
                   stage === 2 ? "bg-sbg" : " bg-transparent"
                 } rounded-full h-[44px] flex flex-row items-center justify-center font-semibold text-sm w-[100px]  hover:bg-sbg ${
-                  isUserLoggedIn ? "cursor-pointer" : " cursor-default"
+                  user ? "cursor-pointer" : " cursor-default"
                 }`}
               >
                 <div>Benefits</div>
               </div>
-              {isUserLoggedIn && (
+              {user && (
                 <div
                   onClick={() => setStage(3)}
                   className={` ${
@@ -107,18 +110,34 @@ function StageThree() {
 }
 
 function StageTwo() {
+  const { token } = useAuth();
+  const [data, setData] = useState({
+    level: 1,
+    waggered: 0,
+  });
+  useEffect(() => {
+    if (token) {
+      fetchData();
+    }
+  }, [token]);
+  const fetchData = async () => {
+    try {
+      const result = await getUserVipProgress(token);
+      setData(result.data);
+    } catch (error) {}
+  };
   return (
     <div className=" flex flex-col gap-y-4">
-      <StageTwoComponents i={1} />
-      <StageTwoComponents i={2} />
-      <StageTwoComponents i={3} />
-      <StageTwoComponents i={4} />
-      <StageTwoComponents i={5} />
+      <StageTwoComponents level={data.level} i={1} />
+      <StageTwoComponents level={data.level} i={2} />
+      <StageTwoComponents level={data.level} i={3} />
+      <StageTwoComponents level={data.level} i={4} />
+      <StageTwoComponents level={data.level} i={5} />
     </div>
   );
 }
 
-function StageTwoComponents({ i }) {
+function StageTwoComponents({ i, level }) {
   const keyMap = {
     1: "bronze",
     2: "silver",
@@ -127,6 +146,11 @@ function StageTwoComponents({ i }) {
     5: "diamond",
   };
   const [isExpanded, setIsExpanded] = useState(false);
+  useEffect(() => {
+    if (i && level && i === level) {
+      setIsExpanded(true);
+    }
+  }, [i, level]);
   return (
     <div className={`w-full rounded-[4px] shadow-custom flex flex-col bg-tbg `}>
       <div
@@ -169,6 +193,13 @@ function StageTwoComponents({ i }) {
               <div className="h-[6px] w-[6px] rounded-full bg-stext"></div>
               <div>More coming soon</div>
             </div>
+            { 
+            i !== 1 && i > level && 
+              <div className="flex flex-row  items-center gap-x-[6px] mt-3">
+                <div className="h-[2px] w-[6px] rounded-full bg-stext"></div>
+                <div>Wager ${(10 ** i * 25).toLocaleString()} in total to unlock</div>
+              </div>
+            }
           </div>
         </>
       )}

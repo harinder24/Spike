@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import AutoGraphIcon from "@mui/icons-material/AutoGraph";
 
 import LogoutIcon from "@mui/icons-material/Logout";
+import { useAuth } from "../layout/AuthProvider";
 export default function Nav({
   setIsRegister,
   setIsSignIn,
@@ -17,8 +18,9 @@ export default function Nav({
   setIsStat,
 }) {
   const navigate = useNavigate()
-  const [isUserLogedIn, setIsUserLogedIn] = useState(true);
+  const {user,wallet, notification} = useAuth()
   const [isProfileOpened, setIsProfileOpened] = useState(false);
+
   return (
     <div className="min-h-[60px] w-full max-[750px]:w-screen flex flex-row">
       <div className=" flex-1 bg-sbg boxshadow flex flex-row justify-center  h-full w-full">
@@ -26,10 +28,10 @@ export default function Nav({
           <div onClick={()=> navigate("/")} className="ds text-4xl max-[400px]:hidden cursor-pointer">Spike</div>
           <div onClick={()=> navigate("/")}  className="ds text-4xl max-[400px]:flex hidden cursor-pointer">S</div>
 
-          {isUserLogedIn && (
+          {user && (
             <div className="flex flex-row h-[46px]">
               <div className="rounded-l-[4px] bg-bg h-full px-4 flex flex-row items-center justify-center text-sm font-semibold">
-                <div className="">CA$324.00</div>
+                <div className="">CA${wallet.toFixed(2)}</div>
               </div>
               <div
                 onClick={() => setIsWallet(true)}
@@ -42,7 +44,7 @@ export default function Nav({
               </div>
             </div>
           )}
-          {isUserLogedIn ? (
+          {user ? (
             <div className=" flex flex-row items-center  max-[400px]:gap-x-2">
               <div className="  relative">
                 <div
@@ -123,9 +125,10 @@ export default function Nav({
                 onClick={() => {
                   setIsNotification(true);
                 }}
-                className=" cursor-pointer p-2"
+                className=" cursor-pointer p-2 relative"
               >
                 <NotificationsIcon />
+                {!notification?.isRead && <div className=" absolute size-2 rounded-full bg-sbg flex flex-row justify-center items-center top-3 right-3"><div className=" size-1 rounded-full bg-green2 "></div></div>}
               </div>
             </div>
           ) : (

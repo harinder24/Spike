@@ -6,6 +6,7 @@ import OtpInput from "react-otp-input";
 import { otpResend, otpValidation, registerApi } from "../../api/auth";
 import serverLink from "../../../serverlink";
 import axios from "axios";
+import { useAuth } from "../layout/AuthProvider";
 export default function Register({ setIsRegister, setisLoading }) {
 
   const [stage, setStage] = useState(1);
@@ -51,7 +52,7 @@ export function StageTwo({
 }) {
   const [error, setError] = useState("");
   const [otp, setOtp] = useState("");
-
+  const {updateUserData} = useAuth()
   const [timer, setTimer] = useState(9);
 
   const resendHandler = async () => {
@@ -79,10 +80,9 @@ export function StageTwo({
         setisLoading(false);
         if(setAuth){
           localStorage.setItem("spikeToken", JSON.stringify(res.token));
-          // to do set auth and
+          updateUserData(res.token)
           onClickHandler();
         }else{
-          //change stage to 3
           setStage(3)
           
         }

@@ -44,11 +44,11 @@ export default function Popups({
         />
       )}
       {isLogOut && <Logout setIsLogOut={setIsLogOut} />}
-      {wallet && <Wallet setIsWallet={setIsWallet} />}
+      {wallet && <Wallet setisLoading={setisLoading} setIsWallet={setIsWallet} />}
       {vip && <VIP setVip={setVip} />}
       {isRecent && <Recent setIsRecent={setIsRecent} />}
       {isStat && <Stats setIsStat={setIsStat} />}
-      {isVault && <Vault setIsVault={setIsVault} />}
+      {isVault && <Vault setisLoading={setisLoading} setIsVault={setIsVault} />}
       {isNotification && (
         <Notification
           setIsNotification={setIsNotification}

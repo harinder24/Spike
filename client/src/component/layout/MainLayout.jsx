@@ -6,6 +6,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Popups from "../popups/Popups";
 import Browse, { BrowseWithTopNav } from "../../screen/Browse";
 import Home from "../../screen/Home";
+import { useAuth } from "./AuthProvider";
+import NotificationMiniPopup from "../popups/NotificationMiniPopup";
 export default function MainLayout({ children }) {
   const [isRegister, setIsRegister] = useState(false);
   const [isSignIn, setIsSignIn] = useState(false);
@@ -19,7 +21,7 @@ export default function MainLayout({ children }) {
   const [isLogOut, setIsLogOut] = useState(false);
   const [isNotAccess, setIsNotAccess] = useState(false);
   const { pathname } = useLocation();
-
+   const {notificationMiniPopup, setNotificationMiniPopup} = useAuth()
   return (
     <>
       <Popups
@@ -46,6 +48,8 @@ export default function MainLayout({ children }) {
         isNotAccess={isNotAccess}
         setIsNotAccess={setIsNotAccess}
       />
+      {notificationMiniPopup && <NotificationMiniPopup setNotificationMiniPopup={setNotificationMiniPopup}/>}
+
       <div className=" h-[100svh] w-screen overflow-hidden flex flex-row caret-transparent ">
         <BrowseWithTopNav
           setIsLogOut={setIsLogOut}

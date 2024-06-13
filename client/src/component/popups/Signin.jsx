@@ -8,6 +8,7 @@ import {
   forgetPasswordApi,
   signInApi,
 } from "../../api/auth";
+import { useAuth } from "../layout/AuthProvider";
 export default function Signin({ setIsSignIn, setisLoading }) {
   const [isForgotPassword, setIsForgotPassword] = useState(false);
   const onClickHandler = () => {
@@ -71,6 +72,7 @@ function StageThree({ setStage, setisLoading, onClickHandler, email }) {
   const [error, setError] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const {updateUserData} = useAuth()
   const submitHandler = async (e) => {
     e.preventDefault();
     setError("");
@@ -82,7 +84,7 @@ function StageThree({ setStage, setisLoading, onClickHandler, email }) {
 
       if (result.success) {
         localStorage.setItem("spikeToken", JSON.stringify(result.token));
-        // do auth
+        updateUserData(result.token)
         onClickHandler();
       } else {
         setError(result.error);
@@ -213,6 +215,7 @@ function SigninContent({
 
   setIsForgotPassword,
 }) {
+  const {updateUserData} = useAuth()
   const [error, setError] = useState("");
 
   const [email, setEmail] = useState("");
@@ -228,7 +231,7 @@ function SigninContent({
    
       if (result.success) {
         localStorage.setItem("spikeToken", JSON.stringify(result.token));
-        // rest of auth
+        updateUserData(result.token)
         onClickHandler();
       } else {
         setError(result.error);
