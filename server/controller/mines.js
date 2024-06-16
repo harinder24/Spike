@@ -194,7 +194,8 @@ export const mineClick = async (req, res) => {
       foundUser.rakeback += foundBet.amount * (foundUser.level / 100);
       foundUser.bets.push(foundBet._id);
       if (foundUser.bets.length > 20) {
-        foundUser.bets.shift();
+        const twentyBets = foundUser.bets.splice(-20)
+        foundUser.bets = twentyBets
       }
       foundUser.isMineActive = "";
       foundUser.losses += 1;
@@ -248,7 +249,8 @@ export const checkout = async (req, res) => {
     foundUser.wins += 1;
     foundUser.bets.push(foundBet._id);
     if (foundUser.bets.length > 20) {
-      foundUser.bets.shift();
+      const twentyBets = foundUser.bets.splice(-20)
+      foundUser.bets = twentyBets
     }
     foundUser.isMineActive = "";
     foundUser.save();

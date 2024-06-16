@@ -43,8 +43,9 @@ export default function Bets() {
       const result = await getBets(token);
       let resultData = result.data;
       if (resultData && resultData.length > 0) {
-        resultData = resultData.reverse();
+        resultData =  resultData.sort((a, b) => b.timeStamp - a.timeStamp);
       }
+      
       setData(resultData);
     } catch (error) {}
   };
@@ -105,19 +106,27 @@ function Payout({
       <div className="p-4 pl-4 text-stext text-center font-semibold">
         {title}
       </div>
-      {data.map((item,i) => {
+      {data.map((item, i) => {
         return (
-      <div
-      key={i}
-        className={`flex flex-row items-center gap-x-[6px] ${
-          isRoundedLeft ? "rounded-l-[4px]" : "rounded-l-none"
-        } ${isRoundedRight ? "rounded-r-[4px]" : "rounded-r-none"}  ${
+          <div
+            key={i}
+            className={`flex flex-row items-center gap-x-[6px] ${
+              isRoundedLeft ? "rounded-l-[4px]" : "rounded-l-none"
+            } ${isRoundedRight ? "rounded-r-[4px]" : "rounded-r-none"}  ${
               i % 2 === 0 ? "bg-tbg" : ""
             }  p-4`}
-      >
-        <div className={`whitespace-nowrap ${item.payout > 0 ? "text-green" : "text-error"}`}>{item.payout < 0 ? "-CA$" + item.payout.toFixed(2).toString().split("-")[1] : "CA$"+item.payout.toFixed(2) }</div>
-      </div>
-       );
+          >
+            <div
+              className={`whitespace-nowrap ${
+                item.payout > 0 ? "text-green" : "text-error"
+              }`}
+            >
+              {item.payout < 0
+                ? "-CA$" + item.payout.toFixed(2).toString().split("-")[1]
+                : "CA$" + item.payout.toFixed(2)}
+            </div>
+          </div>
+        );
       })}
     </div>
   );
@@ -139,21 +148,22 @@ function Mutiplier({
       <div className="p-4 pl-4 text-stext text-center font-semibold">
         {title}
       </div>
-      {data.map((item,i) => {
+      {data.map((item, i) => {
         return (
-      <div
-      key={i}
-        className={`flex flex-row items-center gap-x-[6px] ${
-          isRoundedLeft ? "rounded-l-[4px]" : "rounded-l-none"
-        } ${isRoundedRight ? "rounded-r-[4px]" : "rounded-r-none"} ${
+          <div
+            key={i}
+            className={`flex flex-row items-center gap-x-[6px] ${
+              isRoundedLeft ? "rounded-l-[4px]" : "rounded-l-none"
+            } ${isRoundedRight ? "rounded-r-[4px]" : "rounded-r-none"} ${
               i % 2 === 0 ? "bg-tbg" : ""
             }  p-4`}
-      >
-        <div className=" flex flex-row items-center">
-          {item.multiplier.toFixed(2)} <span className="text-[12px] pl-1">X</span>
-        </div>
-      </div>
-       );
+          >
+            <div className=" flex flex-row items-center">
+              {item.multiplier.toFixed(2)}{" "}
+              <span className="text-[12px] pl-1">X</span>
+            </div>
+          </div>
+        );
       })}
     </div>
   );
@@ -167,7 +177,6 @@ function Amount({
 }) {
   return (
     <div
-   
       className={`flex flex-col ${
         flex ? "flex-grow" : "flex-grow-0"
       }  text-base max-[1200px]:hidden`}
@@ -175,19 +184,19 @@ function Amount({
       <div className="p-4 pl-4 text-stext text-center font-semibold">
         {title}
       </div>
-      {data.map((item,i) => {
+      {data.map((item, i) => {
         return (
-      <div
-      key={i}
-        className={`flex flex-row items-center gap-x-[6px] ${
-          isRoundedLeft ? "rounded-l-[4px]" : "rounded-l-none"
-        } ${isRoundedRight ? "rounded-r-[4px]" : "rounded-r-none"} ${
+          <div
+            key={i}
+            className={`flex flex-row items-center gap-x-[6px] ${
+              isRoundedLeft ? "rounded-l-[4px]" : "rounded-l-none"
+            } ${isRoundedRight ? "rounded-r-[4px]" : "rounded-r-none"} ${
               i % 2 === 0 ? "bg-tbg" : ""
             }  p-4`}
-      >
-        <div className="">CA${item.amount.toFixed(2)}</div>
-      </div>
-       );
+          >
+            <div className="">CA${item.amount.toFixed(2)}</div>
+          </div>
+        );
       })}
     </div>
   );
@@ -206,19 +215,19 @@ function Date({
       }  text-base max-[1200px]:hidden`}
     >
       <div className="p-4 pl-4 text-stext font-semibold">{title}</div>
-      {data.map((item,i) => {
+      {data.map((item, i) => {
         return (
-      <div
-      key={i}
-        className={`flex flex-row items-center gap-x-[6px] ${
-          isRoundedLeft ? "rounded-l-[4px]" : "rounded-l-none"
-        } ${isRoundedRight ? "rounded-r-[4px]" : "rounded-r-none"} ${
+          <div
+            key={i}
+            className={`flex flex-row items-center gap-x-[6px] ${
+              isRoundedLeft ? "rounded-l-[4px]" : "rounded-l-none"
+            } ${isRoundedRight ? "rounded-r-[4px]" : "rounded-r-none"} ${
               i % 2 === 0 ? "bg-tbg" : ""
             }  p-4`}
-      >
-        <div className="">{item.date}</div>
-      </div>
-       );
+          >
+            <div className="">{item.date}</div>
+          </div>
+        );
       })}
     </div>
   );
@@ -239,22 +248,18 @@ function BetId({
     >
       <div className="p-4 pl-4 text-stext font-semibold">{title}</div>
 
-      {data.map((item,i) => {
+      {data.map((item, i) => {
         return (
           <div
-          key={i}
+            key={i}
             className={`flex flex-row items-center gap-x-[6px] ${
               isRoundedLeft ? "rounded-l-[4px]" : "rounded-l-none"
-            } ${
-              isRoundedRight ? "rounded-r-[4px]" : "rounded-r-none"
-            }  ${
+            } ${isRoundedRight ? "rounded-r-[4px]" : "rounded-r-none"}  ${
               i % 2 === 0 ? "bg-tbg" : ""
             }  p-4`}
           >
             <ReceiptOutlinedIcon sx={{ fontSize: 18 }} />
-            <div className="p- font-semibold whitespace-nowrap">
-              {item._id}
-            </div>
+            <div className="p- font-semibold whitespace-nowrap">{item._id}</div>
           </div>
         );
       })}
@@ -279,7 +284,7 @@ function Game({
       {data.map((item, i) => {
         return (
           <div
-          key={i}
+            key={i}
             className={`flex flex-row items-center gap-x-[6px] ${
               isRoundedLeft ? "rounded-l-[4px]" : "rounded-l-none"
             } ${isRoundedRight ? "rounded-r-[4px]" : "rounded-r-none"} ${
