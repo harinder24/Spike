@@ -107,7 +107,7 @@ export function GamesAndCasinoIndividualWrapper({ name, type,setIsNotAccess,isRe
   return (
     <>
       <div className= {`${isRecent ? "w-[calc(100%-8px)] max-w-[300px] aspect-[5/3]" :"w-[calc((100%/3)-12px)] min-w-[150px!important] max-[970px]:w-[calc((100%/2)-8px)] max-[570px]:w-[100%] aspect-[5/3]"}  border-[2px] border-border  rounded-lg h-fit relative overflow-hidden`}>
-        <div onClick={favoriteHandler}  className=" absolute top-1 right-1 text-stext hover:text-[#eee] p-1 cursor-pointer z-[1]">
+        <div onClick={favoriteHandler}  className=" absolute top-1 right-1 text-stext hover:text-[#eee] p-1 cursor-pointer z-[0]">
          {isFavorite ? <StarOutlinedIcon/> : <StarOutlineOutlinedIcon />}
         </div>
         <div

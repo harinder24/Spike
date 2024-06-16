@@ -170,6 +170,9 @@ function DepositStageOne({ amount, setAmount, pk, id }) {
             </div>
           )}{" "}
         </div>
+        <div  className=" r text-stext">
+          Use any future date and CVC
+        </div>
       </div>
       <div className=" flex flex-row w-full h-[46px] gap-x-1">
         <button

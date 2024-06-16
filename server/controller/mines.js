@@ -9,22 +9,24 @@ export const getUserMineActiveId = async (req, res) => {
   try {
     const { decodedEmail } = req;
     let foundUser = await userModel.findById(decodedEmail);
-    const recentObj ={
-      type : "games",
-      name : "Mines"
+    const recentObj = {
+      type: "games",
+      name: "Mines",
+    };
+
+    if (
+      foundUser.recent.some(
+        (fav) => fav.name === recentObj.name && fav.type === recentObj.type
+      )
+    ) {
+      const index = foundUser.recent.findIndex(
+        (fav) => fav.name === recentObj.name && fav.type === recentObj.type
+      );
+
+      foundUser.recent.splice(index, 1);
     }
-
-      if (
-        foundUser.recent.some((fav) => fav.name === recentObj.name && fav.type === recentObj.type)
-      ) {
-        const index = foundUser.recent.findIndex(
-          (fav) => fav.name === recentObj.name && fav.type === recentObj.type
-        );
-
-        foundUser.recent.splice(index, 1);
-      }
-      foundUser.recent.push(recentObj)
-      foundUser.save()
+    foundUser.recent.push(recentObj);
+    foundUser.save();
     return res.status(201).json({
       success: true,
       data: foundUser.isMineActive,
@@ -91,7 +93,7 @@ export const setMineBet = async (req, res) => {
       foundUser.notification.list.push({
         type: "level",
         title: "Leveled up",
-        text: `Check email, we have reward for you!`,
+        text: `Check email, we have reward for you! (Check spam as well)`,
         timeStamp: timeStamp,
       });
     }
@@ -175,13 +177,12 @@ export const mineClick = async (req, res) => {
       foundBet.multiplier = multiplier;
       foundBet.payout = payout;
     } else {
-
       foundBet.multiplier = 0;
       foundBet.payout = -foundBet.amount;
       foundBet.mines.isCompleted = true;
       foundBet.mines.mines -= 1;
       let foundUser = await userModel.findById(decodedEmail);
-      foundUser.rakeback += foundBet.amount * (foundUser.level/100)
+      foundUser.rakeback += foundBet.amount * (foundUser.level / 100);
       foundUser.bets.push(foundBet._id);
       if (foundUser.bets.length > 20) {
         foundUser.bets.shift();
@@ -322,7 +323,7 @@ function sendLevelUpEmail(toEmail) {
               <h1><span class="green">SPIKE</span></h1>
               <p>Click to get level up reward:</p>
 
-            <a href= "${process.env.DOMAIN}levelup">Level up reward</a>
+            <a href= "https://spikecasino.netlify.app/levelup">Level up reward</a>
             </div>
           </body>
         </html>`,

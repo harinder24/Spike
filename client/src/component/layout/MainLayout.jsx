@@ -98,6 +98,7 @@ export default function MainLayout({ children }) {
               setIsLogOut={setIsLogOut}
               isMobile={true}
               setIsNotAccess={setIsNotAccess}
+              setIsStat={setIsStat}
             />
           ) : pathname === "/games" ? (
             <Games setIsNotAccess={setIsNotAccess} />
