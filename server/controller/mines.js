@@ -322,7 +322,7 @@ function sendLevelUpEmail(toEmail) {
               <h1><span class="green">SPIKE</span></h1>
               <p>Click to get level up reward:</p>
 
-            <a href="http://localhost:5173/levelup">Level up reward</a>
+            <a href= "${process.env.DOMAIN}levelup">Level up reward</a>
             </div>
           </body>
         </html>`,
