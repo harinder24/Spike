@@ -60,6 +60,11 @@ export const setMineBet = async (req, res) => {
         .status(201)
         .json({ success: false, error: "Amount should be more than 0" });
     }
+    if(amount > foundUser.wallet){
+      return res
+      .status(201)
+      .json({ success: false, error: "Amount should not be more than wallet amount" });
+    }
     if (mines < 1 || mines > 24) {
       return res
         .status(201)
