@@ -15,6 +15,9 @@ const betsSchema = new mongoose.Schema({
   date: {
     type: String,
   },
+  timeStamp:{
+    type: Number,
+  },
   mines: {
     minesArray: [Boolean],
     recent: { index: { type: Number }, isGem: { type: Boolean } },

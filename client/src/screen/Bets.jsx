@@ -108,6 +108,7 @@ function Payout({
       {data.map((item,i) => {
         return (
       <div
+      key={i}
         className={`flex flex-row items-center gap-x-[6px] ${
           isRoundedLeft ? "rounded-l-[4px]" : "rounded-l-none"
         } ${isRoundedRight ? "rounded-r-[4px]" : "rounded-r-none"}  ${
@@ -141,6 +142,7 @@ function Mutiplier({
       {data.map((item,i) => {
         return (
       <div
+      key={i}
         className={`flex flex-row items-center gap-x-[6px] ${
           isRoundedLeft ? "rounded-l-[4px]" : "rounded-l-none"
         } ${isRoundedRight ? "rounded-r-[4px]" : "rounded-r-none"} ${
@@ -165,6 +167,7 @@ function Amount({
 }) {
   return (
     <div
+   
       className={`flex flex-col ${
         flex ? "flex-grow" : "flex-grow-0"
       }  text-base max-[1200px]:hidden`}
@@ -175,6 +178,7 @@ function Amount({
       {data.map((item,i) => {
         return (
       <div
+      key={i}
         className={`flex flex-row items-center gap-x-[6px] ${
           isRoundedLeft ? "rounded-l-[4px]" : "rounded-l-none"
         } ${isRoundedRight ? "rounded-r-[4px]" : "rounded-r-none"} ${
@@ -205,6 +209,7 @@ function Date({
       {data.map((item,i) => {
         return (
       <div
+      key={i}
         className={`flex flex-row items-center gap-x-[6px] ${
           isRoundedLeft ? "rounded-l-[4px]" : "rounded-l-none"
         } ${isRoundedRight ? "rounded-r-[4px]" : "rounded-r-none"} ${
@@ -237,6 +242,7 @@ function BetId({
       {data.map((item,i) => {
         return (
           <div
+          key={i}
             className={`flex flex-row items-center gap-x-[6px] ${
               isRoundedLeft ? "rounded-l-[4px]" : "rounded-l-none"
             } ${
@@ -273,6 +279,7 @@ function Game({
       {data.map((item, i) => {
         return (
           <div
+          key={i}
             className={`flex flex-row items-center gap-x-[6px] ${
               isRoundedLeft ? "rounded-l-[4px]" : "rounded-l-none"
             } ${isRoundedRight ? "rounded-r-[4px]" : "rounded-r-none"} ${
