@@ -8,6 +8,7 @@ export default function AuthProvider({children}) {
   const [favorite,setFavorite] = useState(null)
   const [notification, setNotification] = useState(null)
   const [notificationMiniPopup, setNotificationMiniPopup] = useState(false)
+  const [gameError, setGameError] = useState("")
   const [token, setToken] = useState(JSON.parse(localStorage.getItem('spikeToken')));
   //waggered
   const updateNotification = async (isUpdate = true) => {
@@ -24,6 +25,32 @@ export default function AuthProvider({children}) {
     if(result.success){
       setWallet(result.data)
     }
+  }
+  const checkUserLogin = async () => {
+
+      if (localStorage.getItem('spikeToken')) {
+        const tk = JSON.parse(localStorage.getItem('spikeToken'));
+        const crrUser = await getUserTokenData(tk);
+     
+        if(!crrUser.success){
+          localStorage.removeItem('spikeToken');
+          setToken(null);
+          setUser(null);
+          setWallet(0)
+          setFavorite(null)
+          setNotification(null)
+          return false;
+        }
+        setToken(tk);
+        setUser(crrUser.data);
+        setWallet(crrUser.wallet)
+        setFavorite(crrUser.favorite)
+        setNotification(crrUser.notification)
+        localStorage.setItem('spikeToken', JSON.stringify(tk));
+        return true
+      } 
+    
+    return false;
   }
   const updateUserData = async (userToken) => {
     if (!userToken) {
@@ -64,7 +91,7 @@ export default function AuthProvider({children}) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, token, updateUserData, wallet, setWallet, favorite, setFavorite,updateWallet ,notification,updateNotification,notificationMiniPopup, setNotificationMiniPopup}}>
+    <AuthContext.Provider value={{ user, token, updateUserData, wallet, setWallet, favorite, setFavorite,updateWallet ,notification,updateNotification,notificationMiniPopup, setNotificationMiniPopup,gameError, setGameError , checkUserLogin}}>
     {children}
   </AuthContext.Provider>
   )

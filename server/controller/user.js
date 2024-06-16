@@ -2,9 +2,9 @@ import userModel from "../Model/user.js";
 import depositModel from "../Model/deposit.js";
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
-import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import Stripe from "stripe";
+import betsModel from "../Model/Bets.js";
 dotenv.config();
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: "2020-08-27",
@@ -18,6 +18,9 @@ const getUsertokenData = async (req, res) => {
   try {
     const { decodedEmail, decodedUsername } = req;
     let foundUser = await userModel.findById(decodedEmail);
+    if (!foundUser) {
+      return res.status(201).json({ success: false, reason: "token" });
+    }
     return res.status(201).json({
       success: true,
       data: { email: decodedEmail, username: decodedUsername },
@@ -87,6 +90,21 @@ const getVault = async (req, res) => {
     return res.status(201).json({
       success: true,
       data: foundUser.vault,
+    });
+  } catch (error) {
+    console.error("Error:", error);
+    return res
+      .status(500)
+      .json({ success: false, error: "Internal Server Error" });
+  }
+};
+const getRakeBack = async (req, res) => {
+  try {
+    const { decodedEmail } = req;
+    let foundUser = await userModel.findById(decodedEmail);
+    return res.status(201).json({
+      success: true,
+      data: foundUser.rakeback,
     });
   } catch (error) {
     console.error("Error:", error);
@@ -253,6 +271,39 @@ const addToVault = async (req, res) => {
       .json({ success: false, error: "Internal Server Error" });
   }
 };
+const rakeBackClaim = async (req, res) => {
+  try {
+    const { decodedEmail } = req;
+
+    const foundUser = await userModel.findById(decodedEmail);
+
+    if (foundUser) {
+      if (foundUser.rakeback === 0) {
+        return res.status(201).json({
+          success: false,
+          error: "Rakeback amount should be more than 0",
+        });
+      }
+
+      foundUser.wallet += foundUser.rakeback;
+      foundUser.rakeback = 0;
+      foundUser.save();
+
+      return res.status(201).json({
+        success: true,
+      });
+    }
+
+    return res.status(201).json({
+      success: false,
+      error: "Internal error",
+    });
+  } catch (error) {
+    return res
+      .status(201)
+      .json({ success: false, error: "Internal Server Error" });
+  }
+};
 const withdrawFromVault = async (req, res) => {
   try {
     const { decodedEmail } = req;
@@ -345,7 +396,7 @@ const getUserStats = async (req, res) => {
         wins: foundUser.wins,
         losses: foundUser.losses,
         numOfBets: foundUser.numOfBets,
-        dateCreated: foundUser.dateCreated
+        dateCreated: foundUser.dateCreated,
       },
     });
   } catch (error) {
@@ -424,6 +475,159 @@ function sendEmail(toEmail, subject, message) {
     }
   });
 }
+const levelUp = async (req, res) => {
+  try {
+    const { decodedEmail, timeStamp } = req;
+    const foundUser = await userModel.findById(decodedEmail);
+    if (foundUser) {
+      if (foundUser.levelUpReward === 0) {
+        return res.status(201).json({
+          success: false,
+        });
+      }
+
+      let amount = foundUser.levelUpReward;
+      foundUser.wallet += foundUser.levelUpReward;
+      foundUser.levelUpReward = 0;
+      foundUser.notification.isRead = false;
+      foundUser.notification.list.push({
+        type: "level",
+        title: "Reward Deposit Confirmed",
+        text: `Your deposit of CA$${amount} has been successfully processed.`,
+        timeStamp: timeStamp,
+      });
+      foundUser.save();
+      return res.status(201).json({
+        success: true,
+      });
+    }
+    return res.status(201).json({
+      success: false,
+    });
+  } catch (error) {
+    return res
+      .status(201)
+      .json({ success: false, error: "Internal Server Error" });
+  }
+};
+const addFavourite = async (req, res) => {
+  const { name, type } = req.body;
+
+  try {
+    let foundUser = await userModel.findById(req?.decodedEmail);
+
+    if (foundUser) {
+      if (
+        !foundUser.favorite.some(
+          (fav) => fav.name === name && fav.type === type
+        )
+      ) {
+        foundUser.favorite.push({ name, type });
+
+        await foundUser.save();
+        return res.status(201).json({
+          success: true,
+          data: foundUser.favorite,
+        });
+      } else {
+        return res.status(201).json({
+          success: false,
+          message: "Item already exists in favourites.",
+        });
+      }
+    } else {
+      return res
+        .status(201)
+        .json({ success: false, message: "Station not found." });
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    return res
+      .status(201)
+      .json({ success: false, message: "Internal server error." });
+  }
+};
+const deleteFavourite = async (req, res) => {
+  const { name, type } = req.body;
+
+  try {
+    let foundUser = await userModel.findById(req?.decodedEmail);
+
+    if (foundUser) {
+      if (
+        foundUser.favorite.some((fav) => fav.name === name && fav.type === type)
+      ) {
+        const index = foundUser.favorite.findIndex(
+          (fav) => fav.name === name && fav.type === type
+        );
+
+        foundUser.favorite.splice(index, 1);
+
+        await foundUser.save();
+        return res.status(201).json({
+          success: true,
+          data: foundUser.favorite,
+        });
+      } else {
+        return res.status(201).json({
+          success: false,
+          message: "Item does not exist in favourites.",
+        });
+      }
+    } else {
+      return res
+        .status(201)
+        .json({ success: false, message: "Station not found." });
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    return res
+      .status(201)
+      .json({ success: false, message: "Internal server error." });
+  }
+};
+
+const getBets = async (req, res) => {
+  try {
+    const { decodedEmail } = req;
+    let foundUser = await userModel.findById(decodedEmail);
+
+    let betList = [];
+
+    await Promise.all(
+      foundUser.bets.map(async (bets) => {
+        const individualBet = await betsModel.findById(bets);
+
+        betList.push(individualBet);
+      })
+    );
+
+    return res.status(201).json({
+      success: true,
+      data: betList,
+    });
+  } catch (error) {
+    console.error("Error:", error);
+    return res
+      .status(500)
+      .json({ success: false, error: "Internal Server Error" });
+  }
+};
+const getRecent = async (req, res) => {
+  try {
+    const { decodedEmail } = req;
+    let foundUser = await userModel.findById(decodedEmail);
+    return res.status(201).json({
+      success: true,
+      data: foundUser.recent,
+    });
+  } catch (error) {
+    console.error("Error:", error);
+    return res
+      .status(500)
+      .json({ success: false, error: "Internal Server Error" });
+  }
+};
 export {
   getUsertokenData,
   getStripeKey,
@@ -436,5 +640,12 @@ export {
   getNotification,
   notificationRead,
   getUserVipProgress,
-  getUserStats
+  getUserStats,
+  rakeBackClaim,
+  getRakeBack,
+  levelUp,
+  addFavourite,
+  deleteFavourite,
+  getBets,
+  getRecent,
 };

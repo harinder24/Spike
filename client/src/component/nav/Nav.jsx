@@ -22,8 +22,8 @@ export default function Nav({
   const [isProfileOpened, setIsProfileOpened] = useState(false);
 
   return (
-    <div className="min-h-[60px] w-full max-[750px]:w-screen flex flex-row">
-      <div className=" flex-1 bg-sbg boxshadow flex flex-row justify-center  h-full w-full">
+    <div className="min-h-[60px] w-full max-[750px]:w-screen flex flex-row boxshadow z-[1]">
+      <div className=" flex-1 bg-sbg flex flex-row justify-center  h-full w-full ">
         <div className=" max-w-[1200px]  mx-10 max-[750px]:mx-4  flex-1 h-full flex flex-row justify-between items-center">
           <div onClick={()=> navigate("/")} className="ds text-4xl max-[400px]:hidden cursor-pointer">Spike</div>
           <div onClick={()=> navigate("/")}  className="ds text-4xl max-[400px]:flex hidden cursor-pointer">S</div>

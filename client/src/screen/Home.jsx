@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../component/layout/AuthProvider";
 import DiamondIcon from "@mui/icons-material/Diamond";
 import StarIcon from "@mui/icons-material/Star";
+import { getUserVipProgress } from "../api/dataFetch";
 export default function Home({ setIsRegister, setIsSignIn }) {
   return (
     <div className="w-full flex flex-row bg-bg  justify-center flex-1 overflow-y-auto overflow-x-hidden">
@@ -158,8 +159,11 @@ export function YourProgress({ isStat = false }) {
   const fetchData = async () => {
     try {
       const result = await getUserVipProgress(token);
+     
       setData(result.data);
-    } catch (error) {}
+    } catch (error) {
+     
+    }
   };
 
   useEffect(() => {

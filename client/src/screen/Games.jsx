@@ -3,7 +3,7 @@ import GamesIcon from "@mui/icons-material/Games";
 import { GamesAndCasinoIndividualWrapper } from "./Favorite";
 
 
-export default function Games() {
+export default function Games({setIsNotAccess}) {
   return (
     <div className="w-full flex flex-col bg-bg  justify-start flex-1 overflow-y-auto ">
       <div className="min-h-[115px] flex w-full flex-row items-center bg-tbg max-[750px]:min-h-20">
@@ -17,18 +17,12 @@ export default function Games() {
       <div className=" w-full flex-1  flex flex-row justify-center">
         <div className=" w-[1200px] max-[1440px]:w-full    flex flex-row flex-wrap gap-4  px-10 max-[750px]:px-4 p-10 content-start">
           <GamesAndCasinoIndividualWrapper
-            image={"/baccarat.jpg"}
-            name={"Baccart"}
+            name={"Mines"}
+            type={"games"}
+            setIsNotAccess={setIsNotAccess}
           />
 
-          <GamesAndCasinoIndividualWrapper
-            image={"/baccarat.jpg"}
-            name={"Baccart"}
-          />
-          <GamesAndCasinoIndividualWrapper
-            image={"/baccarat.jpg"}
-            name={"Baccart"}
-          />
+          
         </div>
       </div>
     </div>

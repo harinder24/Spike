@@ -12,8 +12,8 @@ import DiamondIcon from "@mui/icons-material/Diamond";
 import StarIcon from "@mui/icons-material/Star";
 import { YourProgress } from "../../screen/Home";
 import { useAuth } from "../layout/AuthProvider";
-import { getUserVipProgress } from "../../api/dataFetch";
-export default function VIP({ setVip }) {
+import { getRakeback, getUserVipProgress, rakebackClaim } from "../../api/dataFetch";
+export default function VIP({ setVip,setisLoading }) {
   const [stage, setStage] = useState(1);
   const { user } = useAuth();
   const onClickHandler = () => {
@@ -82,7 +82,7 @@ export default function VIP({ setVip }) {
           <div className="flex flex-col w-full flex-1 gap-y-4  ">
             {stage === 1 && <StageOne />}
             {stage === 2 && <StageTwo />}
-            {stage === 3 && <StageThree />}
+            {stage === 3 && <StageThree onClickHandler={onClickHandler} setisLoading={setisLoading}/>}
           </div>
         </div>
       </div>
@@ -90,18 +90,55 @@ export default function VIP({ setVip }) {
   );
 }
 
-function StageThree() {
+function StageThree({setisLoading,onClickHandler}) {
+  const { token,updateWallet } = useAuth();
+  const [rakeback, setRakeback] = useState(0);
+  const [error, setError] = useState("");
+  useEffect(() => {
+    if (token) {
+      fetchData();
+    }
+  }, [token]);
+  const fetchData = async () => {
+    try {
+      const result = await getRakeback(token);
+      setRakeback(result.data);
+    } catch (error) {}
+  };
+
+  const rakeBackHandler = async() => {
+    setError("")
+    try {
+      setisLoading(true)
+      const result = await rakebackClaim(token);
+      setisLoading(false)
+      if(result.success){
+        updateWallet()
+        onClickHandler()
+      }else{
+        setError(result.error)
+      }
+    } catch (error) {
+      setisLoading(false)
+    }
+  }
   return (
     <>
       <div className="text-[#eee] font-semibold text-sm text-center">
         Available Rakeback
       </div>
       <div className="text-stext font-semibold text-xs text-center">
-        CA$322.23
+        CA${rakeback.toFixed(2)}
       </div>
-      <div className="w-full h-[52px] mt-4 max-[750px]:mt-auto rounded-[4px] shadow-custom bg-button2 hover:bg-buttonHover2 flex flex-row justify-center items-center cursor-pointer">
+      {error && (
+        <div className=" relative text-error text-center text-xs  bre">
+          {error}
+        </div>
+      )}
+      <div onClick={rakeBackHandler} className="w-full h-[52px] mt-4 max-[750px]:mt-auto rounded-[4px] shadow-custom bg-button2 hover:bg-buttonHover2 flex flex-row justify-center items-center cursor-pointer">
         <div className="text-black text-sm font-semibold ">Claim Rakeback</div>
       </div>
+
       <div className="text-stext font-semibold text-xs text-center">
         Rakeback is accumulated each time you place a bet and VIP tier.
       </div>
@@ -149,6 +186,8 @@ function StageTwoComponents({ i, level }) {
   useEffect(() => {
     if (i && level && i === level) {
       setIsExpanded(true);
+    }else{
+      setIsExpanded(false)
     }
   }, [i, level]);
   return (
@@ -187,7 +226,7 @@ function StageTwoComponents({ i, level }) {
           <div className="p-4 text-xs text-stext">
             <div className="flex flex-row  items-center gap-x-[6px]">
               <div className="h-[6px] w-[6px] rounded-full bg-stext"></div>
-              <div>Rakeback - 1% on every loss</div>
+              <div>Rakeback - {i}% on every loss</div>
             </div>
             <div className="flex flex-row  items-center gap-x-[6px] mt-1">
               <div className="h-[6px] w-[6px] rounded-full bg-stext"></div>

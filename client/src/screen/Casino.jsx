@@ -2,7 +2,7 @@ import React from "react";
 import CasinoIcon from "@mui/icons-material/Casino";
 import { GamesAndCasinoIndividualWrapper } from "./Favorite";
 
-export default function Casino() {
+export default function Casino({setIsNotAccess}) {
   return (
     <div className="w-full flex flex-col bg-bg  justify-start flex-1 overflow-y-auto ">
       <div className="min-h-[115px] flex w-full flex-row items-center bg-tbg max-[750px]:min-h-20">
@@ -15,7 +15,7 @@ export default function Casino() {
       </div>
       <div className=" w-full flex-1  flex flex-row justify-center">
         <div className=" w-[1200px] max-[1440px]:w-full    flex flex-row flex-wrap gap-4  px-10 max-[750px]:px-4 p-10 content-start">
-          <GamesAndCasinoIndividualWrapper
+          {/* <GamesAndCasinoIndividualWrapper
             image={"/baccarat.jpg"}
             name={"Baccart"}
           />
@@ -27,7 +27,10 @@ export default function Casino() {
           <GamesAndCasinoIndividualWrapper
             image={"/baccarat.jpg"}
             name={"Baccart"}
-          />
+          /> */}
+          <div className=" w-full flex flex-row justify-center gap-x-[6px] text-stext text-sm">
+              Casino games are coming soon checkout Mines in game section
+            </div>
         </div>
       </div>
     </div>

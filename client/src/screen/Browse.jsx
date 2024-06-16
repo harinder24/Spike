@@ -13,6 +13,7 @@ import HistoryOutlinedIcon from "@mui/icons-material/HistoryOutlined";
 import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
 import CasinoIcon from "@mui/icons-material/Casino";
 import GamesIcon from "@mui/icons-material/Games";
+import DiamondIcon from "@mui/icons-material/Diamond";
 import MenuIcon from "@mui/icons-material/Menu";
 import HomeIcon from "@mui/icons-material/Home";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -257,8 +258,8 @@ export default function Browse({
         >
           <div
             className={`${
-              pathname === "/bets" ? "group-text-[#eee]" : ""
-            } flex flex-row justify-center items-center ${user ? "group-hover:text-[#eee] text-stext " : "text-ttext "}`}
+              pathname === "/bets" ? "group-text-[#eee]" : user ? "group-hover:text-[#eee] text-stext " : "text-ttext "
+            } flex flex-row justify-center items-center `}
           >
             <ReceiptOutlinedIcon sx={{ fontSize: 18 }} />
           </div>
@@ -277,8 +278,8 @@ export default function Browse({
         >
           <div
             className={`${
-              pathname === "/favorite" ? "group-text-[#eee]" : ""
-            } flex flex-row justify-center items-center ${user ? "group-hover:text-[#eee] text-stext " : " text-ttext"} `}
+              pathname === "/favorite" ? "group-text-[#eee]" : user ? "group-hover:text-[#eee] text-stext " : "text-ttext "
+            } flex flex-row justify-center items-center `}
           >
             <StarOutlineOutlinedIcon sx={{ fontSize: 18 }} />
           </div>
@@ -287,7 +288,7 @@ export default function Browse({
           )}
         </div>
       </div>
-      <div className="bg-sbg rounded-[4px] w-full flex flex-col ">
+      {/* <div className="bg-sbg rounded-[4px] w-full flex flex-col ">
         {!isWidthReduced && (
           <>
             {" "}
@@ -304,10 +305,37 @@ export default function Browse({
           }`}
         >
           <div className=" flex flex-row justify-center items-center group-hover:text-[#eee] text-stext">
-            <img className=" w-[18px] min-w-[18px] grayscale" src="baccarat.png" alt="" />
+            <img className=" w-[18px] min-w-[18px]  grayscale" src="/baccarat.png" alt="" />
           </div>
           {!isWidthReduced && (
             <div className=" text-sm font-semibold ">Baccarat</div>
+          )}
+        </div>
+      </div> */}
+         <div  className="bg-sbg rounded-[4px] w-full flex flex-col ">
+        {!isWidthReduced && (
+          <>
+            {" "}
+            <div className="flex flex-row items-center p-4 gap-x-1 group  rounded-[4px] ">
+              <div className=" text-sm font-semibold">Games</div>
+            </div>
+            <div className=" border-b-[2px] border-stext"></div>
+          </>
+        )}
+        <div
+        onClick={() => user ? navigate("/games/mines") : setIsNotAccess(true)}
+          className={` ${pathname === "/games/mines" ? "bg-sbgHover" : ""
+          } flex flex-row items-center p-4 gap-x-[6px]  group  rounded-[4px] ${user ? "hover:bg-sbgHover cursor-pointer " : " cursor-default text-ttext"}  ${
+            isWidthReduced ? "justify-center" : "justify-start"
+          }`}
+        >
+          <div className= {`${
+              pathname === "/games/mines" ? "group-text-[#eee]" : "text-stext"
+            } flex flex-row justify-center items-center group-hover:text-[#eee] `}>
+          <DiamondIcon sx={{ fontSize: 18 }} />
+          </div>
+          {!isWidthReduced && (
+            <div className=" text-sm font-semibold ">Mines</div>
           )}
         </div>
       </div>

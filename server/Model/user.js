@@ -36,6 +36,10 @@ const userSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  rakeback: {
+    type: Number,
+    default: 0,
+  },
   waggered: {
     type: Number,
     default: 0,
@@ -52,12 +56,26 @@ const userSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
-  level:{
+  level: {
     type: Number,
-    default: 1
+    default: 1,
   },
-  favorite: [String],
-  recent: [String],
+  isMineActive : {
+    type: String,
+    default: ""
+  },
+  levelUpReward: {
+    type: Number,
+    default: 0
+  },
+  favorite: [{
+    name: {type: String},
+    type: {type: String}
+  }],
+  recent: [{
+    name: {type: String},
+    type: {type: String}
+  }],
   bets: [ObjectId],
   notification: {
     isRead: {

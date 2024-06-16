@@ -12,6 +12,8 @@ export default {
         border: "#e2e8f033",
         bg: "#0f212e",
         sbg: "#1a2c38",
+        mines: "#2f4553",
+        minesHover: "#557086",
         tbg: "#213743",
         redbg: "rgb(233,17,60)",
         redbgHover: "rgb(186,14,48)",

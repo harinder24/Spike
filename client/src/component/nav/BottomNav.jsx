@@ -20,10 +20,10 @@ export default function ({setIsNotAccess}) {
         <div onClick={()=> navigate("/browse")}  className={`px-4 h-full flex flex-row items-center cursor-pointer max-[350px]:px-2 ${pathname === "/browse" ? "text-[#eee]" : ""}`}>
             <ManageSearchIcon/>
         </div>
-        <div onClick={()=> navigate("/casino")}   className={`px-4 h-full flex flex-row items-center cursor-pointer max-[350px]:px-2 ${pathname === "/casino" ? "text-[#eee]" : ""}`}>
+        <div onClick={()=> pathname.split("/")[1] !== "casino" && navigate("/casino")}   className={`px-4 h-full flex flex-row items-center cursor-pointer max-[350px]:px-2 ${pathname.split("/")[1] === "casino" ? "text-[#eee]" : ""}`}>
             <CasinoIcon/>
         </div>
-        <div onClick={()=> navigate("/games")}  className={`px-4 h-full flex flex-row items-center cursor-pointer max-[350px]:px-2 ${pathname === "/games" ? "text-[#eee]" : ""}`}>
+        <div onClick={()=> pathname.split("/")[1]  !== "games" && navigate("/games")}  className={`px-4 h-full flex flex-row items-center cursor-pointer max-[350px]:px-2 ${pathname.split("/")[1]  === "games" ? "text-[#eee]" : ""}`}>
             <GamesIcon/>
         </div>
         <div onClick={() => user ? navigate("/bets") : setIsNotAccess(true)}  className={`px-4 h-full flex flex-row items-center max-[350px]:px-2 ${!user ?  "text-ttext"  : pathname === "/bets" ? "text-[#eee] cursor-pointer" : "cursor-pointer" }`}>

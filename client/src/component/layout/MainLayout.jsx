@@ -8,6 +8,10 @@ import Browse, { BrowseWithTopNav } from "../../screen/Browse";
 import Home from "../../screen/Home";
 import { useAuth } from "./AuthProvider";
 import NotificationMiniPopup from "../popups/NotificationMiniPopup";
+import GameError from "../popups/GameError";
+import Games from "../../screen/Games";
+import Casino from "../../screen/Casino";
+import Favorite from "../../screen/Favorite";
 export default function MainLayout({ children }) {
   const [isRegister, setIsRegister] = useState(false);
   const [isSignIn, setIsSignIn] = useState(false);
@@ -21,7 +25,12 @@ export default function MainLayout({ children }) {
   const [isLogOut, setIsLogOut] = useState(false);
   const [isNotAccess, setIsNotAccess] = useState(false);
   const { pathname } = useLocation();
-   const {notificationMiniPopup, setNotificationMiniPopup} = useAuth()
+  const {
+    notificationMiniPopup,
+    setNotificationMiniPopup,
+    setGameError,
+    gameError,
+  } = useAuth();
   return (
     <>
       <Popups
@@ -48,8 +57,14 @@ export default function MainLayout({ children }) {
         isNotAccess={isNotAccess}
         setIsNotAccess={setIsNotAccess}
       />
-      {notificationMiniPopup && <NotificationMiniPopup setNotificationMiniPopup={setNotificationMiniPopup}/>}
-
+      {notificationMiniPopup && (
+        <NotificationMiniPopup
+          setNotificationMiniPopup={setNotificationMiniPopup}
+        />
+      )}
+      {gameError && (
+        <GameError setGameError={setGameError} gameError={gameError} />
+      )}
       <div className=" h-[100svh] w-screen overflow-hidden flex flex-row caret-transparent ">
         <BrowseWithTopNav
           setIsLogOut={setIsLogOut}
@@ -72,7 +87,7 @@ export default function MainLayout({ children }) {
             setIsNotification={setIsNotification}
           />
           {pathname === "/" ? (
-            <Home setIsRegister={setIsRegister} setIsSignIn={setIsSignIn}/>
+            <Home setIsRegister={setIsRegister} setIsSignIn={setIsSignIn} />
           ) : pathname === "/browse" ? (
             <Browse
               setIsNotification={setIsNotification}
@@ -84,7 +99,13 @@ export default function MainLayout({ children }) {
               isMobile={true}
               setIsNotAccess={setIsNotAccess}
             />
-          ) : (
+          ) : pathname === "/games" ? (
+            <Games setIsNotAccess={setIsNotAccess} />
+          ) : pathname === "/casino" ? (
+            <Casino setIsNotAccess={setIsNotAccess} />
+          ) : pathname === "/favorite" ? (
+            <Favorite setIsNotAccess={setIsNotAccess} />
+          ) :(
             children
           )}
 

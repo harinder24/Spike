@@ -7,6 +7,7 @@ import CampaignIcon from "@mui/icons-material/Campaign";
 import { useAuth } from "../layout/AuthProvider";
 import { format } from 'timeago.js';
 import { notificationReadHandler } from "../../api/dataFetch";
+import MovingIcon from '@mui/icons-material/Moving';
 export default function Notification({ setIsNotification, setisLoading }) {
   const onClickHandler = () => {
     setIsNotification(false);
@@ -76,7 +77,8 @@ function IndividualNotifications({title, text, type, timeStamp}) {
   return (
     <div className=" rounded-[4px] flex flex-row  ">
       <div className="flex flex-row items-center justify-center text-green2 w-[56px] bg-bg rounded-l-[4px]">
-        <WalletIcon />
+      {type === "wallet" && <WalletIcon />}
+      {type === "level" && <MovingIcon />}
       </div>
       <div className="flex-1 h-fit bg-tbg py-3 px-4 flex flex-col text-sm gap-[2px] min-h-20 rounded-r-[4px]">
         <div className="flex flex-row items-center justify-between flex-wrap gap-[2px]">

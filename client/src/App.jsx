@@ -9,18 +9,23 @@ import MainLayout from "./component/layout/MainLayout";
 import AuthProvider from "./component/layout/AuthProvider";
 import '@stripe/stripe-js'
 import Success,{Success2} from "./screen/Success";
+import Mines from "./screen/Mines";
+import LevelUp from "./screen/Levelup";
 function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
         <MainLayout>
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<></>} />
             <Route path="/browse" element={<></>} />
-            <Route path="/casino" element={<Casino />} />
-            <Route path="/games" element={<Games />} />
+            
+            <Route path="/games/mines" element={<Mines />} />
             <Route path="/bets" element={<Bets />} />
-            <Route path="/favorite" element={<Favorite />} />
+            <Route path="/favorite" element={<></>} />
+            <Route path="/casino" element={<></>} />
+            <Route path="/games" element={<></>} />
+            <Route path="/levelup" element={<LevelUp />} />
             <Route path="/success/:id/:amount/:path" element={<Success />} />
             <Route path="/success/:id/:amount/:path/:path2" element={<Success2 />} />
           </Routes>

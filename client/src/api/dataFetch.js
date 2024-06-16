@@ -71,6 +71,34 @@ export async function walletHandler(token) {
     console.log(error);
   }
 }
+export async function getBets(token) {
+  try {
+    const response = await axios.get(serverLink + "/user/getbets", {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    });
+    const userData = response.data;
+
+    return userData;
+  } catch (error) {
+    console.log(error);
+  }
+}
+export async function getRecent(token) {
+  try {
+    const response = await axios.get(serverLink + "/user/getrecent", {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    });
+    const userData = response.data;
+
+    return userData;
+  } catch (error) {
+    console.log(error);
+  }
+}
 export async function notificationHandler(token) {
   try {
     const response = await axios.get(serverLink + "/user/notification", {
@@ -94,7 +122,64 @@ export async function notificationReadHandler(token) {
       },
     });
     const userData = response.data;
-console.log(userData);
+
+    return userData;
+  } catch (error) {
+    console.log(error);
+  }
+}
+export async function levelUpApi(token) {
+  const timeStamp = Date.now()
+  try {
+    const response = await axios.post(
+      serverLink + "/user/levelup",
+      { timeStamp },
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      }
+    );
+    const userData = response.data;
+
+    return userData;
+  } catch (error) {
+    console.log(error);
+  }
+}
+export async function addfav(token,type, name) {
+
+  try {
+    const response = await axios.post(
+      serverLink + "/user/addfav",
+      { type, name },
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      }
+    );
+    const userData = response.data;
+
+    return userData;
+  } catch (error) {
+    console.log(error);
+  }
+}
+export async function deletefav(token,type, name) {
+
+  try {
+    const response = await axios.post(
+      serverLink + "/user/deletefav",
+      { type, name },
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      }
+    );
+    const userData = response.data;
+
     return userData;
   } catch (error) {
     console.log(error);
@@ -188,4 +273,31 @@ export async function withdrawVault(token, amount, password) {
     console.log(error);
   }
 }
+export async function getRakeback(token) {
+  try {
+    const response = await axios.get(serverLink + "/user/getrakeback", {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    });
+    const userData = response.data;
 
+    return userData;
+  } catch (error) {
+    console.log(error);
+  }
+}
+export async function rakebackClaim(token) {
+  try {
+    const response = await axios.get(serverLink + "/user/rakebackclaim", {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    });
+    const userData = response.data;
+
+    return userData;
+  } catch (error) {
+    console.log(error);
+  }
+}
