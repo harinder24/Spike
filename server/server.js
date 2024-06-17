@@ -9,6 +9,7 @@ const port = process.env.PORT || 3000;
 import { authRouter } from "./Router/auth.js";
 import { userRouter } from "./Router/user.js";
 import { minesRouter } from "./Router/mines.js";
+import { baccaratRouter } from "./Router/baccarat.js";
 
 app.use(cors());
 app.use(express.json());
@@ -21,7 +22,7 @@ mongoose.connect(process.env.MONGO_URI, {
 app.use("/auth/", authRouter);
 app.use("/user/", userRouter);
 app.use("/mines/", minesRouter);
-
+app.use("/baccarat/", baccaratRouter);
 
 
 

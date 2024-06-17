@@ -288,7 +288,7 @@ export default function Browse({
           )}
         </div>
       </div>
-      {/* <div className="bg-sbg rounded-[4px] w-full flex flex-col ">
+      <div className="bg-sbg rounded-[4px] w-full flex flex-col ">
         {!isWidthReduced && (
           <>
             {" "}
@@ -299,19 +299,19 @@ export default function Browse({
           </>
         )}
         <div
-        
-          className={`flex flex-row items-center p-4 gap-x-[6px]  group  rounded-[4px] ${user ? "hover:bg-sbgHover cursor-pointer " : " cursor-default text-ttext"}  ${
+        onClick={() => user ? navigate("/casino/baccarat") : setIsNotAccess(true)}
+          className={`${pathname === "/casino/baccarat" ? "bg-sbgHover" : ""} flex flex-row items-center p-4 gap-x-[6px]  group  rounded-[4px] ${user ? "hover:bg-sbgHover cursor-pointer " : " cursor-default text-ttext"}  ${
             isWidthReduced ? "justify-center" : "justify-start"
           }`}
         >
           <div className=" flex flex-row justify-center items-center group-hover:text-[#eee] text-stext">
-            <img className=" w-[18px] min-w-[18px]  grayscale" src="/baccarat.png" alt="" />
+            <img className=" w-[18px] min-w-[18px]  grayscale group-hover:filter-none" src="/baccarat.png" alt="" />
           </div>
           {!isWidthReduced && (
             <div className=" text-sm font-semibold ">Baccarat</div>
           )}
         </div>
-      </div> */}
+      </div>
          <div  className="bg-sbg rounded-[4px] w-full flex flex-col ">
         {!isWidthReduced && (
           <>

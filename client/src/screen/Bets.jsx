@@ -291,8 +291,8 @@ function Game({
               i % 2 === 0 ? "bg-tbg" : ""
             }  p-4 `}
           >
-            {/* <img className="w-[18px]" src="baccarat.png" alt="" /> */}
             {item.game === "Mines" && <DiamondIcon sx={{ fontSize: 18 }} />}
+            {item.game === "Baccarat" && <img className=" w-[18px] min-w-[18px]  grayscale" src="/baccarat.png" alt="" />}
             <div className="p- font-semibold whitespace-nowrap">
               {item.game}
             </div>

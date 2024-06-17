@@ -26,6 +26,16 @@ const betsSchema = new mongoose.Schema({
     mines: {type: Number},
     gems:  {type: Number},
   },
+  baccarat : {
+    history : [{ isPlayer: {type: Boolean}, value: {type : Number}, card: {type: String} }],
+    result: {type: Number},
+    playerAmount : {type: Number, default: 0},
+    tieAmount : {type: Number, default: 0},
+    bankerAmount : {type: Number, default: 0},
+    playerPayout :{type: Number, default: 0},
+    tiePayout : {type: Number, default: 0},
+    bankerPayout : {type: Number, default: 0},
+  }
 });
 
 const betsModel = mongoose.model("bets", betsSchema);

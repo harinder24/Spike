@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .grayscale {
-  filter: opacity(0.5);
+  filter: opacity(0.9);
 }
 .boxshadow{
   box-shadow: #0003 0 4px 6px -1px, #0000001f 0 2px 4px -1px;;
@@ -51,14 +51,6 @@ input:-webkit-autofill:active {
 .animate-width-3s {
   animation: width100To0Animation 3s ease-in-out;
 }
-@keyframes rotateY180 {
-  0% {
-    transform: rotateY(180deg);
-  }
-  100% {
-    transform: rotateY(0deg);
-  }
-}
-.rotate-y180 {
-  animation: rotateY180 1s linear ;
+.transition-opacity {
+  transition: opacity 1s ease;
 }

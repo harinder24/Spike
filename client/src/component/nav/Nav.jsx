@@ -58,7 +58,7 @@ export default function Nav({
                     <div className="absolute bottom-[-10px] left-[12px] border-transparent border-b-[#eee] border-[8px] border-t-[0px] z-40"></div>
                     <div className="  absolute bottom-[-207px] bg-[#eee] flex flex-col left-[-40px] rounded-[4px] overflow-hidden py-1 z-40">
                       <div
-                        onClick={() => setIsWallet(true)}
+                        onClick={() => {setIsWallet(true); setIsProfileOpened(false)}}
                         className="text-[rgba(47,69,83)] hover:bg-[rgb(177,186,211)] group h-[38px]  flex flex-row items-center gap-x-[6px] px-3 text-xs font-semibold cursor-pointer "
                       >
                         <div className=" flex flex-row items-center">
@@ -70,7 +70,7 @@ export default function Nav({
                         </div>
                       </div>
                       <div
-                        onClick={() => setIsVault(true)}
+                        onClick={() => {setIsVault(true); setIsProfileOpened(false)}}
                         className="text-[rgba(47,69,83)] hover:bg-[rgb(177,186,211)] group h-[38px] flex flex-row items-center gap-x-[6px] px-3 text-xs font-semibold cursor-pointer"
                       >
                         <div className=" flex flex-row items-center">
@@ -82,7 +82,7 @@ export default function Nav({
                         </div>
                       </div>
                       <div
-                        onClick={() => setIsStat(true)}
+                        onClick={() => {setIsStat(true); setIsProfileOpened(false)}}
                         className="text-[rgba(47,69,83)] hover:bg-[rgb(177,186,211)] group h-[38px] flex flex-row items-center gap-x-[6px] px-3 text-xs font-semibold cursor-pointer"
                       >
                         <div className=" flex flex-row items-center">
@@ -94,7 +94,7 @@ export default function Nav({
                         </div>
                       </div>
                       <div
-                        onClick={() => setIsNotification(true)}
+                        onClick={() => {setIsNotification(true); setIsProfileOpened(false)}}
                         className="text-[rgba(47,69,83)] hover:bg-[rgb(177,186,211)] group h-[38px] flex flex-row items-center gap-x-[6px] px-3 text-xs font-semibold cursor-pointer"
                       >
                         <div className=" flex flex-row items-center">
@@ -106,7 +106,7 @@ export default function Nav({
                         </div>
                       </div>
                       <div
-                        onClick={() => setIsLogOut(true)}
+                        onClick={() => {setIsLogOut(true); setIsProfileOpened(false)}}
                         className="text-[rgba(47,69,83)] hover:bg-[rgb(177,186,211)] group h-[38px] flex flex-row items-center gap-x-[6px] px-3 text-xs font-semibold cursor-pointer"
                       >
                         <div className=" flex flex-row items-center">

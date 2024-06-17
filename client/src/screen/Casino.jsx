@@ -15,22 +15,11 @@ export default function Casino({setIsNotAccess}) {
       </div>
       <div className=" w-full flex-1  flex flex-row justify-center">
         <div className=" w-[1200px] max-[1440px]:w-full    flex flex-row flex-wrap gap-4  px-10 max-[750px]:px-4 p-10 content-start">
-          {/* <GamesAndCasinoIndividualWrapper
-            image={"/baccarat.jpg"}
-            name={"Baccart"}
+        <GamesAndCasinoIndividualWrapper
+            name={"Baccarat"}
+            type={"casino"}
+            setIsNotAccess={setIsNotAccess}
           />
-
-          <GamesAndCasinoIndividualWrapper
-            image={"/baccarat.jpg"}
-            name={"Baccart"}
-          />
-          <GamesAndCasinoIndividualWrapper
-            image={"/baccarat.jpg"}
-            name={"Baccart"}
-          /> */}
-          <div className=" w-full flex flex-row justify-center gap-x-[6px] text-stext text-sm">
-              Casino games are coming soon checkout Mines in game section
-            </div>
         </div>
       </div>
     </div>

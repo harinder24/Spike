@@ -9,24 +9,7 @@ export const getUserMineActiveId = async (req, res) => {
   try {
     const { decodedEmail } = req;
     let foundUser = await userModel.findById(decodedEmail);
-    const recentObj = {
-      type: "games",
-      name: "Mines",
-    };
-
-    if (
-      foundUser.recent.some(
-        (fav) => fav.name === recentObj.name && fav.type === recentObj.type
-      )
-    ) {
-      const index = foundUser.recent.findIndex(
-        (fav) => fav.name === recentObj.name && fav.type === recentObj.type
-      );
-
-      foundUser.recent.splice(index, 1);
-    }
-    foundUser.recent.push(recentObj);
-    foundUser.save();
+   
     return res.status(201).json({
       success: true,
       data: foundUser.isMineActive,
@@ -111,6 +94,24 @@ export const setMineBet = async (req, res) => {
         timeStamp: timeStamp,
       });
     }
+    const recentObj = {
+      type: "games",
+      name: "Mines",
+    };
+
+    if (
+      foundUser.recent.some(
+        (fav) => fav.name === recentObj.name && fav.type === recentObj.type
+      )
+    ) {
+      const index = foundUser.recent.findIndex(
+        (fav) => fav.name === recentObj.name && fav.type === recentObj.type
+      );
+
+      foundUser.recent.splice(index, 1);
+    }
+    foundUser.recent.push(recentObj);
+    foundUser.save();
     foundUser.save();
     return res
       .status(201)
@@ -294,7 +295,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-function sendLevelUpEmail(toEmail) {
+export function sendLevelUpEmail(toEmail) {
   const mailOptions = {
     from: process.env.gmail,
     to: toEmail,
