@@ -9,9 +9,9 @@ import jwt from "jsonwebtoken"
         const verified = jwt.verify(token, process.env.TOKEN_SECRET);
         req.decodedEmail = verified.email
         req.decodedUsername = verified.username
-        if(!isNextTimestampWithinAWeek(currentTimestamp, verified.timeStamp)){
-            return res.status(201).json({success: false, reason: "token"})
-        } 
+        // if(!isNextTimestampWithinAWeek(currentTimestamp, verified.timeStamp)){
+        //     return res.status(201).json({success: false, reason: "token"})
+        // } 
         next();
     }catch(err){
         

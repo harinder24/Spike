@@ -60,6 +60,11 @@ export const setMineBet = async (req, res) => {
         .status(201)
         .json({ success: false, error: "Amount should be more than 0" });
     }
+    if (parseAmount > 1000) {
+      return res
+        .status(201)
+        .json({ success: false, error: "Max bet allowed is CA$1000.00" });
+    }
     if (amount > foundUser.wallet) {
       return res
         .status(201)
