@@ -64,7 +64,7 @@ export default function Stats({ setIsStat }) {
             </div>
             <div className="p-4 rounded-[4px] bg-bg flex-1">
               <div className="text-sm text-stext">Waggered</div>
-              <div className=" text-xl">${data && (data?.waggered).toLocaleString()}</div>
+              <div className=" text-xl">${data && (data?.waggered).toFixed(2).toLocaleString()}</div>
             </div>
           </div>
         </div>

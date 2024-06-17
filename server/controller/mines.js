@@ -112,7 +112,6 @@ export const setMineBet = async (req, res) => {
     }
     foundUser.recent.push(recentObj);
     foundUser.save();
-    foundUser.save();
     return res
       .status(201)
       .json({ success: true, betId: newBet._id, isLeveledUp: isLeveledUp });

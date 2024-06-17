@@ -119,7 +119,7 @@ export function GamesAndCasinoIndividualWrapper({ name, type,setIsNotAccess,isRe
             alt=""
             className="w-full h-full object-cover cursor-pointer"
           />
-          <div className=" pointer-events-none absolute bottom-0 w-full flex flex-row justify-center pb-4 text-[150%] font-bold text-stext">
+          <div className=" pointer-events-none absolute bottom-0 w-full flex flex-row justify-center py-2 bg-sbg text-lg font-bold text-stext ">
             <div>{name}</div>
           </div>
         </div>
