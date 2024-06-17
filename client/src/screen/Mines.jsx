@@ -164,7 +164,7 @@ export default function Mines() {
   };
 
   return (
-    <div className="w-full flex flex-row bg-sbg  justify-center flex-1 overflow-y-auto overflow-x-hidden">
+    <div className="w-full flex flex-row bg-sbg max-[750px]:bg-tbg  justify-center flex-1 overflow-y-auto overflow-x-hidden">
       <div className=" w-[1200px] max-[1440px]:w-full h-fit   flex flex-row rounded-lg  p-10 max-[750px]:p-4 max-[930px]:flex-col-reverse max-[930px]:w-[400px] max-[930px]:p-4 max-[420px]:w-full max-[420px]:p-0">
         <Controller
           isBetActive={isBetActive}
@@ -190,7 +190,7 @@ function MinesView({ isActive, isBetActive, mineClickHandler, betData }) {
   const gridItems = Array.from({ length: 25 }, (_, i) => i + 1);
 
   return (
-    <div className=" flex-1 w-full bg-bg rounded-r-lg max-[930px]:rounded-t-lg max-[930px]:rounded-b-none flex flex-row justify-center items-center h-fit p-3 max-[420px]:rounded-none relative">
+    <div className=" flex-1 w-full bg-bg rounded-r-lg max-[930px]:rounded-t-lg max-[930px]:rounded-b-none flex flex-row justify-center items-center h-fit p-3 max-[420px]:rounded-none relative max-[750px]:rounded-b-lg">
       <div className="grid grid-cols-5 gap-4 max-[930px]:gap-2 ">
         {gridItems.map((item, i) => (
           <IndividualMine

@@ -182,8 +182,8 @@ export default function Baccarat() {
     } catch (error) {}
   };
   return (
-    <div className="w-full flex flex-row bg-sbg  justify-center flex-1 overflow-y-auto overflow-x-hidden">
-      <div className=" w-[1200px] max-[1440px]:w-full h-fit   flex flex-row rounded-lg  p-10 max-[750px]:p-4 max-[930px]:flex-col-reverse max-[930px]:w-[400px] max-[930px]:p-4 max-[420px]:w-full max-[420px]:p-0">
+    <div className="w-full flex flex-row bg-sbg  justify-center flex-1 overflow-y-auto overflow-x-hidden max-[750px]:bg-tbg">
+      <div className=" w-[1200px] max-[1440px]:w-full h-fit   flex flex-row rounded-lg  p-10 max-[750px]:p-4 max-[930px]:flex-col-reverse max-[930px]:w-[400px] max-[930px]:p-4 max-[420px]:w-full max-[420px]:p-0 ">
         <Controller
           tableHandler={tableHandler}
           totalAmount={totalAmount}
@@ -273,7 +273,7 @@ function BaccaratView({
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
   return (
-    <div className=" min-[930px]:flex-1 w-full bg-bg rounded-r-lg max-[930px]:rounded-t-lg max-[930px]:rounded-b-none flex flex-col h-[600px]  p-4 max-[420px]:rounded-none relative max-[360px]:px-2 overflow-hidden max-[930px]:h-[400px]">
+    <div className=" min-[930px]:flex-1 w-full bg-bg rounded-r-lg max-[930px]:rounded-t-lg max-[930px]:rounded-b-none flex flex-col h-[600px]  p-4 max-[420px]:rounded-none relative max-[360px]:px-2 overflow-hidden max-[930px]:h-[400px]  max-[750px]:rounded-b-lg">
       {result && data.payout > data.amount &&  <div className=" absolute top-0 w-full h-full flex flex-row justify-center items-center z-[1]">
         <div className={`min-w-[150px] border-[2px] rounded-lg ${result === 3 ? "border-yellow-600 text-yellow-600" : "border-green text-green"}  p-4 flex flex-col bg-[rgba(0,0,0,0.8)] items-center gap-y-2`}>
           <div className="flex flex-row items-center text-2xl font-semibold  gap-x-1">
