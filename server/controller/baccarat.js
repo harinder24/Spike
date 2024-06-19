@@ -30,9 +30,9 @@ export const baccaratbet = async (req, res) => {
       });
     }
     if (
-      pAmount * 2 > 1000 ||
-      tAmount * 2 > 250 ||
-      bAmount * 2 > 1000
+      pAmount  > 1000 ||
+      tAmount  > 250 ||
+      bAmount  > 1000
     ) {
       return res.status(201).json({
         success: false,

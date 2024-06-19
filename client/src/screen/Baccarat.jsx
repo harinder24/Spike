@@ -171,7 +171,8 @@ export default function Baccarat() {
       });
 
       if (result.success) {
-        updateWallet();
+     
+
         if (result.isLeveledUp) {
           updateNotification();
         }
@@ -200,6 +201,8 @@ export default function Baccarat() {
           bankerAmount={bankerAmount}
           data={data}
           setIsActive={setIsActive}
+          setAmountHistory={setAmountHistory}
+          updateWallet={updateWallet}
         />
       </div>
     </div>
@@ -214,13 +217,14 @@ function BaccaratView({
   isActive,
   data,
   setIsActive,
+  setAmountHistory,updateWallet
 }) {
   const [stage, setStage] = useState(0);
   const [playerScore, setPlayerScore] = useState(null);
   const [bankerScore, setBankerScore] = useState(null);
   const [thirdPlayer, setThirdPlayer] = useState(null);
   const [thirdBanker, setThirdBanker] = useState(null);
-  const [result, setResult] = useState(null)
+  const [result, setResult] = useState(null);
   useEffect(() => {
     if (data && data.baccarat.history) {
       setStage(0);
@@ -228,7 +232,7 @@ function BaccaratView({
       setThirdBanker(false);
       setBankerScore(null);
       setPlayerScore(null);
-      setResult(null)
+      setResult(null);
       dataHandler();
     } else {
       setStage(0);
@@ -236,8 +240,8 @@ function BaccaratView({
       setThirdBanker(false);
       setBankerScore(null);
       setPlayerScore(null);
-      setResult(null)
-      setIsActive(false)
+      setResult(null);
+      setIsActive(false);
     }
   }, [data]);
 
@@ -260,30 +264,40 @@ function BaccaratView({
       } else {
         setBankerScore((prev) => (prev + item.value) % 10);
       }
-      if((i+1) === data.baccarat.history.length){
-       
-        setResult(data.baccarat.result)
+      if (i + 1 === data.baccarat.history.length) {
+        setResult(data.baccarat.result);
       }
       await sleep(1000);
     }
-    setIsActive(false)
-    
+    setAmountHistory([]);
+    updateWallet()
+    setIsActive(false);
   };
   function sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
   return (
     <div className=" min-[930px]:flex-1 w-full bg-bg rounded-r-lg max-[930px]:rounded-t-lg max-[930px]:rounded-b-none flex flex-col h-[600px]  p-4 max-[420px]:rounded-none relative max-[360px]:px-2 overflow-hidden max-[930px]:h-[400px]  max-[750px]:rounded-b-lg">
-      {result && data.payout > data.amount &&  <div className=" absolute top-0 w-full h-full flex flex-row justify-center items-center z-[1]">
-        <div className={`min-w-[150px] border-[2px] rounded-lg ${result === 3 ? "border-yellow-600 text-yellow-600" : "border-green text-green"}  p-4 flex flex-col bg-[rgba(0,0,0,0.8)] items-center gap-y-2`}>
-          <div className="flex flex-row items-center text-2xl font-semibold  gap-x-1">
-            <div>{data.multiplier.toFixed(2)}</div>
-            <div className=" flex flex-row items-center">x</div>{" "}
+      {result && data.payout > data.amount && (
+        <div className=" absolute top-0 w-full h-full flex flex-row justify-center items-center z-[1] pointer-events-none">
+          <div
+            className={`min-w-[150px] border-[2px] rounded-lg ${
+              result === 3
+                ? "border-yellow-600 text-yellow-600"
+                : "border-green text-green"
+            }  p-4 flex flex-col bg-[rgba(0,0,0,0.8)] items-center gap-y-2`}
+          >
+            <div className="flex flex-row items-center text-2xl font-semibold  gap-x-1">
+              <div>{data.multiplier.toFixed(2)}</div>
+              <div className=" flex flex-row items-center">x</div>{" "}
+            </div>
+            <div className="w-10 h-1 rounded-full bg-border"></div>
+            <div className="text-sm font-semibold ">
+              CA${data.payout.toFixed(2)}
+            </div>
           </div>
-          <div className="w-10 h-1 rounded-full bg-border"></div>
-          <div className="text-sm font-semibold ">CA${data.payout.toFixed(2)}</div>
         </div>
-      </div>}
+      )}
       <img
         className="w-[75px] absolute top-[-75px] right-10 max-[930px]:w-[60px] max-[930px]:top-[-50px]"
         src="/cardb.png"
@@ -292,26 +306,46 @@ function BaccaratView({
       <div className="  flex-1 flex flex-row justify-center  overflow-hidden">
         <div className="  w-[80%] my-10 relative left-[-6%]">
           <div className=" absolute w-[16%] min-w-[50px] top-0 left-0  ">
-            {stage >= 1 && <div className="w-full h-fit">
-              <Card card={data.baccarat.history[0].card} result={result} isPlayer={true}/>
-            </div>}
-            {stage >= 3 && <div className="w-full h-fit absolute top-[20%] left-[60%] ">
-              <Card  card={data.baccarat.history[2].card} result={result} isPlayer={true}/>
-            </div>}
-            {thirdPlayer  && <div className="w-full h-fit absolute top-[40%] left-[120%] ">
-              <Card card={thirdPlayer} result={result} isPlayer={true}/>
-            </div>}
+            {stage >= 1 && (
+              <div className="w-full h-fit">
+                <Card
+                  card={data.baccarat.history[0].card}
+                  result={result}
+                  isPlayer={true}
+                />
+              </div>
+            )}
+            {stage >= 3 && (
+              <div className="w-full h-fit absolute top-[20%] left-[60%] ">
+                <Card
+                  card={data.baccarat.history[2].card}
+                  result={result}
+                  isPlayer={true}
+                />
+              </div>
+            )}
+            {thirdPlayer && (
+              <div className="w-full h-fit absolute top-[40%] left-[120%] ">
+                <Card card={thirdPlayer} result={result} isPlayer={true} />
+              </div>
+            )}
           </div>
           <div className=" absolute w-[16%] min-w-[50px] top-0 right-[4%] max-[930px]:right-[8%] max-[350px]:right-[10%] max-[320px]:right-[12%] ">
-          {stage >= 2 && <div className="w-full h-fit">
-              <Card  card={data.baccarat.history[1].card}  result={result}/>
-            </div>}
-            {stage >= 4 && <div className="w-full h-fit absolute top-[20%] left-[60%] ">
-              <Card  card={data.baccarat.history[3].card}  result={result}/>
-            </div>}
-            {thirdBanker  && <div className="w-full h-fit absolute top-[40%] left-[120%] ">
-              <Card card={thirdBanker} result={result}/>
-            </div>}
+            {stage >= 2 && (
+              <div className="w-full h-fit">
+                <Card card={data.baccarat.history[1].card} result={result} />
+              </div>
+            )}
+            {stage >= 4 && (
+              <div className="w-full h-fit absolute top-[20%] left-[60%] ">
+                <Card card={data.baccarat.history[3].card} result={result} />
+              </div>
+            )}
+            {thirdBanker && (
+              <div className="w-full h-fit absolute top-[40%] left-[120%] ">
+                <Card card={thirdBanker} result={result} />
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -330,14 +364,24 @@ function BaccaratView({
           <div className=" absolute top-[-30px] left-0 text-stext text-base font-semibold w-full text-center pointer-events-none">
             1 : 2
           </div>
-          <div className=" absolute top-[-100px] max-[930px]:top-[-70px] left-0 w-full flex flex-row justify-center pointer-events-none ">
-            <div
-              className={`${ result ? result === 3 ? "bg-yellow-600" : result === 1 ? "bg-green2" : "bg-tbg"  : "bg-tbg"}  w-[62px] px-2 py-1 font-semibold text-[#eee] flex flex-row justify-center items-center rounded-full text-sm  `}
-            >
-              {" "}
-              <div>{playerScore}</div>
+          {playerScore !== null && (
+            <div className=" absolute top-[-100px] max-[930px]:top-[-70px] left-0 w-full flex flex-row justify-center pointer-events-none ">
+              <div
+                className={`${
+                  result
+                    ? result === 3
+                      ? "bg-yellow-600"
+                      : result === 1
+                      ? "bg-green2"
+                      : "bg-tbg"
+                    : "bg-tbg"
+                }  w-[62px] px-2 py-1 font-semibold text-[#eee] flex flex-row justify-center items-center rounded-full text-sm  `}
+              >
+                {" "}
+                <div>{playerScore}</div>
+              </div>
             </div>
-          </div>
+          )}
           <div className=" absolute  w-full bottom-[-24px] text-center left-0 text-stext text-[10px] font-semibold pointer-events-none">
             Max Bet: $1000
           </div>
@@ -421,14 +465,24 @@ function BaccaratView({
           <div className="  text-center max-[930px]:text-sm max-[380px]:text-xs">
             CA${bankerAmount.toFixed(2)}
           </div>
-          <div className=" absolute top-[-100px]  max-[930px]:top-[-70px] left-0 w-full flex flex-row justify-center pointer-events-none ">
-            <div
-              className={`${ result ? result === 3 ? "bg-yellow-600" : result === 2 ? "bg-green2" : "bg-tbg"  : "bg-tbg"} w-[62px] px-2 py-1 font-semibold text-[#eee] flex flex-row justify-center items-center rounded-full text-sm`}
-            >
-              {" "}
-              <div>{bankerScore}</div>
+          {bankerScore !== null && (
+            <div className=" absolute top-[-100px]  max-[930px]:top-[-70px] left-0 w-full flex flex-row justify-center pointer-events-none ">
+              <div
+                className={`${
+                  result
+                    ? result === 3
+                      ? "bg-yellow-600"
+                      : result === 2
+                      ? "bg-green2"
+                      : "bg-tbg"
+                    : "bg-tbg"
+                } w-[62px] px-2 py-1 font-semibold text-[#eee] flex flex-row justify-center items-center rounded-full text-sm`}
+              >
+                {" "}
+                <div>{bankerScore}</div>
+              </div>
             </div>
-          </div>
+          )}
           <div className=" absolute top-[-30px] left-0 text-stext text-base font-semibold w-full text-center pointer-events-none">
             1 : 1.95
           </div>
@@ -487,30 +541,49 @@ function BaccaratView({
   );
 }
 
-function Card({card, result,isPlayer = false}) {
+function Card({ card, result, isPlayer = false }) {
   const [isVisible, setIsVisible] = useState(false);
- 
+
   useEffect(() => {
-    
     setIsVisible(true);
   }, []);
 
- 
-
   return (
     <div
-      className={`w-full aspect-[5/8] h-full rounded-lg bg-[#eee] p-[5%] flex flex-col gap-y-2 border-[4px]      ${result ? result === 3 ? " border-yellow-600" : isPlayer && result === 1 ? "border-green2 " : !isPlayer && result === 2 ? "border-green2": " border-transparent" : "border-transparent"} overflow-hidden shadow-custom transition-opacity ${
+      className={`w-full aspect-[5/8] h-full rounded-lg bg-[#eee] p-[5%] flex flex-col gap-y-2 border-[4px]      ${
+        result
+          ? result === 3
+            ? " border-yellow-600"
+            : isPlayer && result === 1
+            ? "border-green2 "
+            : !isPlayer && result === 2
+            ? "border-green2"
+            : " border-transparent"
+          : "border-transparent"
+      } overflow-hidden shadow-custom transition-opacity ${
         isVisible ? "opacity-100 " : "opacity-0 "
-      } ${card.split(" ")[0] === "S" || card.split(" ")[0] === "C" ? "text-black" : "text-red-600"}`}
+      } ${
+        card.split(" ")[0] === "S" || card.split(" ")[0] === "C"
+          ? "text-black"
+          : "text-red-600"
+      }`}
     >
       <div className=" text-4xl font-bold  pl-2 pt-2 max-[1030px]:text-3xl max-[970px]:text-2xl max-[970px]:pl-1">
         {card.split(" ")[1]}
       </div>
       <div className="flex flex-row justify-start">
-        {card.split(" ")[0] === "S" &&  <BsSuitSpadeFill className="size-10   max-[1030px]:size-8 max-[970px]:size-6" />}
-        {card.split(" ")[0] === "D" &&  <BsFillSuitDiamondFill className="size-10   max-[1030px]:size-8 max-[970px]:size-6" />}
-        {card.split(" ")[0] === "H" &&  <BsFillSuitHeartFill className="size-10   max-[1030px]:size-8 max-[970px]:size-6" />}
-        {card.split(" ")[0] === "C" &&  <BsFillSuitClubFill className="size-10   max-[1030px]:size-8 max-[970px]:size-6" />}
+        {card.split(" ")[0] === "S" && (
+          <BsSuitSpadeFill className="size-10   max-[1030px]:size-8 max-[970px]:size-6" />
+        )}
+        {card.split(" ")[0] === "D" && (
+          <BsFillSuitDiamondFill className="size-10   max-[1030px]:size-8 max-[970px]:size-6" />
+        )}
+        {card.split(" ")[0] === "H" && (
+          <BsFillSuitHeartFill className="size-10   max-[1030px]:size-8 max-[970px]:size-6" />
+        )}
+        {card.split(" ")[0] === "C" && (
+          <BsFillSuitClubFill className="size-10   max-[1030px]:size-8 max-[970px]:size-6" />
+        )}
       </div>
     </div>
   );
