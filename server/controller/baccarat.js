@@ -12,9 +12,9 @@ export const baccaratbet = async (req, res) => {
     let pAmount = bets.playerAmount;
     let tAmount = bets.tieAmount;
     let bAmount = bets.bankerAmount;
-    pAmount = parseFloat(pAmount)
-      tAmount = parseFloat(tAmount)
-      bAmount = parseFloat(bAmount)
+    pAmount = parseFloat(pAmount);
+    tAmount = parseFloat(tAmount);
+    bAmount = parseFloat(bAmount);
     const totalAmount = pAmount + tAmount + bAmount;
     let foundUser = await userModel.findById(decodedEmail);
     if (totalAmount === 0) {
@@ -29,18 +29,13 @@ export const baccaratbet = async (req, res) => {
         error: "Bet amount should not be more than wallet amount",
       });
     }
-    if (
-      pAmount  > 1000 ||
-      tAmount  > 250 ||
-      bAmount  > 1000
-    ) {
+    if (pAmount > 1000 || tAmount > 250 || bAmount > 1000) {
       return res.status(201).json({
         success: false,
         error: "Exceeding bet amount limit",
       });
     }
-    
-      
+
     const sixCards = getSixRandomCards();
 
     const bacaratData = baccaratOutcome(
@@ -61,16 +56,14 @@ export const baccaratbet = async (req, res) => {
       pAmount = 0;
       bAmount = 0;
     }
-    let totalPayoutAmount = 0
-     totalPayoutAmount = pAmount + bAmount + tAmount;
-     let mutliplier = (totalPayoutAmount / totalAmount).toFixed(2);
+    let totalPayoutAmount = 0;
+    totalPayoutAmount = pAmount + bAmount + tAmount;
+    let mutliplier = (totalPayoutAmount / totalAmount).toFixed(2);
     if (totalPayoutAmount == 0) {
       totalPayoutAmount = -totalAmount;
-      mutliplier = 0
+      mutliplier = 0;
     }
-    
-    
-    
+
     const newBet = new betsModel({
       amount: totalAmount,
       date: date,
@@ -137,10 +130,10 @@ export const baccaratbet = async (req, res) => {
     }
     foundUser.recent.push(recentObj);
     foundUser.save();
-   
+
     return res
       .status(201)
-      .json({ success: true, data: newBet, isLeveledUp: isLeveledUp })
+      .json({ success: true, data: newBet, isLeveledUp: isLeveledUp });
   } catch (error) {
     console.error("Error:", error);
     return res
@@ -183,8 +176,6 @@ function getSixRandomCards() {
 
   return selectedCards;
 }
-
-
 
 function baccaratOutcome(playerCards, bankerCards) {
   let history = [];
@@ -236,10 +227,13 @@ function baccaratOutcome(playerCards, bankerCards) {
   let playerDrawThirdCard = false;
   let bankerDrawThirdCard = false;
 
-  if (playerPoints <= 5) {
-    playerDrawThirdCard = true;
-  } else if (bankerPoints <= 5) {
-    bankerDrawThirdCard = true;
+  if (playerPoints < 8 && bankerPoints < 8) {
+    if (playerPoints <= 5) {
+      playerDrawThirdCard = true;
+    } else if (bankerPoints <= 5) {
+      bankerDrawThirdCard = true;
+  
+    }
   } else {
     if (playerPoints > bankerPoints) {
       return { result: 1, history };
@@ -275,6 +269,8 @@ function baccaratOutcome(playerCards, bankerCards) {
         (playerThirdCardValue === 6 || playerThirdCardValue === 7)
       ) {
         bankerDrawThirdCard = true;
+      } else {
+        bankerDrawThirdCard = false;
       }
     }
   }
@@ -284,36 +280,14 @@ function baccaratOutcome(playerCards, bankerCards) {
       ? cardValue(bankerCards[2], false)
       : cardValue(playerCards[2], false);
 
-    if (bankerThirdCardValue >= 0 && bankerThirdCardValue <= 9) {
-      bankerPoints = (bankerPoints + bankerThirdCardValue) % 10;
-      if (bankerPoints === 3 && playerPoints !== 8) {
-        return { result: 1, history };
-      } else if (bankerPoints === 4 && playerPoints >= 2 && playerPoints <= 7) {
-        return { result: 1, history };
-      } else if (bankerPoints === 5 && playerPoints >= 4 && playerPoints <= 7) {
-        return { result: 1, history };
-      } else if (
-        bankerPoints === 6 &&
-        (playerPoints === 6 || playerPoints === 7)
-      ) {
-        return { result: 1, history };
-      } else if (bankerPoints > playerPoints) {
-        return { result: 2, history };
-      } else if (bankerPoints < playerPoints) {
-        return { result: 1, history };
-      } else {
-        return { result: 3, history };
-      }
-    }
+    bankerPoints = (bankerPoints + bankerThirdCardValue) % 10;
   }
 
-  if (!bankerDrawThirdCard || !playerDrawThirdCard) {
-    if (playerPoints > bankerPoints) {
-      return { result: 1, history };
-    } else if (bankerPoints > playerPoints) {
-      return { result: 2, history };
-    } else {
-      return { result: 23, history };
-    }
+  if (playerPoints > bankerPoints) {
+    return { result: 1, history };
+  } else if (bankerPoints > playerPoints) {
+    return { result: 2, history };
+  } else {
+    return { result: 3, history };
   }
 }
