@@ -34,14 +34,14 @@ export const setMineBet = async (req, res) => {
     if (amount === "") {
       return res.status(201).json({
         success: false,
-        error: "Amount should be more than 0",
+        error: "Minimum amount is CA$1.00",
       });
     }
     const parseAmount = parseFloat(amount);
-    if (parseAmount <= 0) {
+    if (parseAmount < 1) {
       return res
         .status(201)
-        .json({ success: false, error: "Amount should be more than 0" });
+        .json({ success: false, error: "Minimum amount is CA$1.00" });
     }
     if (parseAmount > 1000) {
       return res

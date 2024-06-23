@@ -20,6 +20,11 @@ export default function Casino({setIsNotAccess}) {
             type={"casino"}
             setIsNotAccess={setIsNotAccess}
           />
+          <GamesAndCasinoIndividualWrapper
+            name={"Blackjack"}
+            type={"casino"}
+            setIsNotAccess={setIsNotAccess}
+          />
           <div className= {`${false ? "w-[calc(100%-8px)] max-w-[300px] aspect-[5/3]" :"w-[calc((100%/3)-12px)] min-w-[150px!important] max-[970px]:w-[calc((100%/2)-8px)] max-[570px]:w-[100%] aspect-[5/3]"}  border-[2px] border-border  rounded-lg h-fit relative overflow-hidden p-4 text-sm font-semibold bg-sbg text-stext flex flex-row justify-center items-center`}>
           <div>
             More casino games coming soon

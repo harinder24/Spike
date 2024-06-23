@@ -10,6 +10,7 @@ import { authRouter } from "./Router/auth.js";
 import { userRouter } from "./Router/user.js";
 import { minesRouter } from "./Router/mines.js";
 import { baccaratRouter } from "./Router/baccarat.js";
+import { blackjackRouter } from "./Router/blackjack.js";
 
 app.use(cors());
 app.use(express.json());
@@ -23,6 +24,7 @@ app.use("/auth/", authRouter);
 app.use("/user/", userRouter);
 app.use("/mines/", minesRouter);
 app.use("/baccarat/", baccaratRouter);
+app.use("/blackjack/", blackjackRouter);
 
 
 

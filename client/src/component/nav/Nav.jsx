@@ -30,12 +30,12 @@ export default function Nav({
 
           {user && (
             <div className="flex flex-row h-[46px]">
-              <div className="rounded-l-[4px] bg-bg h-full px-4 flex flex-row items-center justify-center text-sm font-semibold">
-                <div className="">CA${wallet.toFixed(2)}</div>
+              <div className="rounded-l-[4px] bg-bg h-full px-4 flex flex-row items-center justify-center text-sm font-semibold max-[330px]:px-2">
+                {wallet >= 1000 ?     <div className="">CA${parseInt(wallet / 1000)}K</div>:     <div className="">CA${wallet.toFixed(2)}</div>}
               </div>
               <div
                 onClick={() => setIsWallet(true)}
-                className="rounded-r-[4px] bg-button hover:bg-buttonHover cursor-pointer h-full px-4 flex flex-row items-center justify-center text-sm font-semibold"
+                className="rounded-r-[4px] bg-button hover:bg-buttonHover cursor-pointer h-full px-4 flex flex-row items-center justify-center text-sm font-semibold  max-[330px]:px-2"
               >
                 <div className=" max-[750px]:hidden">Wallet</div>
                 <div className=" hidden max-[750px]:flex">
@@ -49,7 +49,7 @@ export default function Nav({
               <div className="  relative">
                 <div
                   onClick={() => setIsProfileOpened((prev) => !prev)}
-                  className="cursor-pointer p-2"
+                  className="cursor-pointer p-2  max-[330px]:px-1"
                 >
                   <Person2Icon />
                 </div>
@@ -125,7 +125,7 @@ export default function Nav({
                 onClick={() => {
                   setIsNotification(true);
                 }}
-                className=" cursor-pointer p-2 relative"
+                className=" cursor-pointer p-2 relative  max-[330px]:px-1"
               >
                 <NotificationsIcon />
                 {!notification?.isRead && <div className=" absolute size-2 rounded-full bg-sbg flex flex-row justify-center items-center top-3 right-3"><div className=" size-1 rounded-full bg-green2 "></div></div>}

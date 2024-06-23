@@ -12,6 +12,7 @@ import Success,{Success2} from "./screen/Success";
 import Mines from "./screen/Mines";
 import LevelUp from "./screen/Levelup";
 import Baccarat from "./screen/Baccarat";
+import Blackjack from "./screen/Blackjack";
 function App() {
   return (
     <AuthProvider>
@@ -28,6 +29,7 @@ function App() {
             <Route path="/games" element={<></>} />
             <Route path="/levelup" element={<LevelUp />} />
             <Route path="/casino/baccarat" element={<Baccarat />} />
+            <Route path="/casino/blackjack" element={<Blackjack />} />
             <Route path="/success/:id/:amount/:path" element={<Success />} />
             <Route path="/success/:id/:amount/:path/:path2" element={<Success2 />} />
           </Routes>

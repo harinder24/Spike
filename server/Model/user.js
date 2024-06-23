@@ -64,6 +64,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: ""
   },
+  isBlackjackActive: {
+    type: String,
+    default: ""
+  },
   levelUpReward: {
     type: Number,
     default: 0
